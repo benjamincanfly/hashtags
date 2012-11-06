@@ -1,0 +1,9 @@
+SetEnvIf Host ^hashtags\.benjaminapple\.com passreq 
+AuthType Basic 
+AuthName "Hello!" 
+AuthUserFile /home/bapple/webapps/hashtags/.hashpasswd 
+Require valid-user 
+Order allow,deny 
+Allow from all 
+Deny from env=passreq 
+Satisfy any
