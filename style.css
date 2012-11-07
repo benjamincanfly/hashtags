@@ -81,12 +81,12 @@ ol#options a {
 }
 
 div#tweets .tweet {
+	position: relative;
 	font-size: 24px;
 	padding: 15px;
 	color: #111;
 	background: #eee;
 	border: 1px solid #ddd;
-	position: relative;
 	clear: both;
 	min-height: 40px;
 	margin: 0 auto 20px;
@@ -94,10 +94,58 @@ div#tweets .tweet {
 	border-radius: 4px;
 }
 
-div#tweets.dofont .tweet {
+div#tweets .tweet .username,
+div#tweets .tweet .hash,
+div#tweets .tweet .atjimmy { display: none; }
+
+div#tweets[showusername=yes] .tweet .username,
+div#tweets[showhash=yes] .tweet .hash,
+div#tweets[showatjimmy=yes] .tweet .atjimmy {
+	display: inline;
+}
+
+#tweets .tweet[color=red] {
+	background: #fcc;
+}
+
+#tweets .tweet[color=blue] {
+	background: #cdf;
+}
+
+#tweets .tweet[color=green] {
+	background: #cfc;
+}
+
+#tweets .tweet[color=yellow] {
+	background: #feb;
+}
+
+div#tweets[dofont=yes] .tweet {
 	font-size: 12px;
 	font-family: Times, Times New Roman, serif;
 	min-height: 0px;
+}
+
+div#tweets.shownumbers .tweet:before {
+	content: counter(my-badass-counter);
+	counter-increment: my-badass-counter;
+	display: block;
+	position: absolute;
+	top: 50%;
+	margin-top: -20px;
+	left: -70px;
+	color: #ddd;
+	font-size: 28px;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 div#tweets .tweet .text {
@@ -113,7 +161,7 @@ div#tweets.read .tweet .text {
 	margin-bottom: -1em;
 }
 
-div#tweets.read.dofont .tweet .text {
+div#tweets.read[dofont=yes] .tweet .text {
 	
 }
 
@@ -215,7 +263,7 @@ span.viewButtons select {
 #viewControls[rating='2'] input[rating='2'],
 #viewControls[rating='1'] input[rating='1'],
 #viewControls[rating='0'] input[rating='0'] {
-	background: #0d0;
+	background: #06d;
 	color: #fff;
 	text-shadow: 1px 1px 1px #000;
 }
@@ -230,10 +278,16 @@ span.viewButtons select {
 	vertical-align: middle;
 	width: 24px;
 	height: 24px;
-	margin: -2px 2px 0px 0px;
+	margin: 1px -4px 0px 0px;
 }
 
-#tweets .tweets { display: none; }
+#formatting label {
+	
+}
+#tweets .tweets {
+	display: none; 
+	counter-reset: my-badass-counter;
+}
 
 #tweets[rating='3'] .tweets[rating='3'],
 #tweets[rating='2'] .tweets[rating='2'],
