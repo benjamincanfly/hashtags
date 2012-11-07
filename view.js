@@ -1,3 +1,7 @@
+function replaceURLWithHTMLLinks(text) {
+    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return text.replace(exp,"<a href='$1' target=_NEW>$1</a>"); 
+}
 
 var LNJF={
 	
@@ -94,6 +98,7 @@ var LNJF={
 			
 			text=text.replace(new RegExp('(#'+hashtag+')([\s]{0,})', 'gim'), "<span class='hash'>\$1 </span>");
 			text=text.replace(new RegExp('(@jimmyfallon)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>").replace(new RegExp('(@latenightjimmy)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>");
+			text=replaceURLWithHTMLLinks(text);
 			text='<a href="http://www.twitter.com/'+tweet['user']+'" class="username">'+tweet['user']+' </a> '+text;
 			
 			//console.info(text);
