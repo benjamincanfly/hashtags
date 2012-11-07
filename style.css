@@ -26,6 +26,11 @@ a:hover {
 	text-decoration: underline;
 }
 
+.note {
+	margin: 5px 0 0 0;
+	color: #aaa;
+}
+
 button, input, select, label {
 	cursor: pointer;
 	vertical-align: middle;
@@ -331,4 +336,9 @@ body#rate #rateFormatting {
 
 #audio {
 	opacity: 0;
+}
+
+body#settings textarea {
+	margin-top: 5px;
+	padding: 8px;
 }

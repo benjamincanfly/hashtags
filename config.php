@@ -12,5 +12,4 @@ while($thisSetting = mysql_fetch_assoc($q)){
 	$config[$thisSetting['configKey']] = $thisSetting['configValue'];
 }
 
-
 ?>

@@ -6,14 +6,20 @@ $body="";
 
 if(!$_POST || $_POST['action']!='go'){
 	
-	$body.="Want to get and import LNJF hashtaggers' favorited tweets with the hashtag ".$config['hashtag']."?<br/><br/>After clicking 'Go' be patient, it could take a minute.<br/><br/><form method='post' action='getFavorites.php'><input type='hidden' name='action' value='go'/><input type='submit' value='Go'/></form>";
+	$body.="<h2>Get #".$config['hashtag']." tweets favorited by LNJF hashtaggers</h2><br/>Favorited tweets will be imported from these Twitter accounts:<br/><ul>";
+	
+	$favers=explode(' ', $config['favers']);
+	
+	for($i=0;$i<count($favers);$i++){
+		$body.="<li>".$favers[$i]."</li>";
+	}
+	
+	$body.="</ul>After clicking 'Get favorites' please be patient, it could take a minute!<br/><br/><form method='post' action='getFavorites.php'><input type='hidden' name='action' value='go'/><input type='submit' value='Get favorites'/></form>";
 	
 	include("html2.php");
 	
 	die();
 }
-
-$tweeters=array('namesfuckinhank','ArthurMeyer4','tagburbon');
 
 $body.="<h1>#".$config['hashtag']."</h1>";
 
@@ -82,7 +88,7 @@ $content = $connection->get('account/verify_credentials');
 //count=200&screen_name=namesfuckinhank
 
 
-foreach($tweeters as $tweeter){
+foreach(explode(' ', $config['favers']) as $tweeter){
 	
 	$max=false;
 	
