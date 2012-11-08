@@ -45,7 +45,6 @@ $body.='<div id="finished">Fuck yeah! All done! <a href="/ratedTweets.php">View 
 $body.='<div id="progress">You are <span><em class="percent">0</em>%</span> done rating tweets. So far you have <span><em class="Ts">0</em> Ts</span> and <span><em class="STs">0</em> S/Ts</span></div>';
 
 $body.='<script type="text/javascript">var jsonTweets='.json_encode($jsontweets).';</script>';
-$body.='<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>';
 $body.='<script type="text/javascript" src="/rate.js"></script>';
 
 include("html2.php");

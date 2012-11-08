@@ -342,3 +342,39 @@ body#settings textarea {
 	margin-top: 5px;
 	padding: 8px;
 }
+
+#joey {
+	position:fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 10000;
+	background: rgba(0,0,0,.9);
+}
+
+#joey div {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	margin: -250px 0 0 -250px;
+	width: 500px;
+	height: 500px;
+	border: 4px solid #000;
+	background: url(/joey.jpg) center center no-repeat;
+	border-radius: 8px;
+	cursor: pointer;
+	box-shadow: 12px 15px 3px rgba(0,0,0,.3);
+	
+}
+
+#joey div:hover {
+	border: 4px solid #333;
+}
+
+#joey div:active {
+	margin: -255px 0 0 -255px;
+	width: 510px;
+	height: 510px;
+	background-size: 100%;
+}
