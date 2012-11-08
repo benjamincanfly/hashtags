@@ -2,7 +2,7 @@
 $("a#joeyLink").live("click", function(){
 	var matte=$('<div id="joey"><div></div></div>').appendTo('body').on("mousedown", function(){
 		
-		$("#audio").append("<embed src='/audio/joey/22.mp3' autostart='true' loop='false'/>");
+		$("#audio").html("<embed src='/audio/joey/22.mp3' autostart='true' loop='false'/>");
 		$(this).remove();
 		
 	});
