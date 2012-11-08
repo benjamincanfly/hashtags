@@ -6,6 +6,10 @@ $body="";
 
 if(!$_POST || $_POST['action']!='go'){
 	
+	if($_GET['message']){
+		$body.="<h1 style='color:#0d0;'>Ok, you signed into Twitter, now you can click 'Get favorites' and it will work.</h1>";
+	}
+	
 	$body.="<h2>Get #".$config['hashtag']." tweets favorited by LNJF hashtaggers</h2><br/>Favorited tweets will be imported from these Twitter accounts:<br/><ul>";
 	
 	$favers=explode(' ', $config['favers']);
