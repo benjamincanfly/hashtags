@@ -1,4 +1,6 @@
 
+/*** GENERAL ***/
+
 html {
 	background: #eee;
 	position: relative;
@@ -60,6 +62,8 @@ body #wrapper {
 	position: relative;
 }
 
+/*** STUFF ***/
+
 body h1#title {
 	margin: 0 0 20px 0px;
 }
@@ -84,6 +88,8 @@ body h1#title a {
 ol#options a {
 	font-weight: bold;
 }
+
+/*** TWEETS ***/
 
 div#tweets .tweet {
 	position: relative;
@@ -210,7 +216,8 @@ div#tweets .tweet button:active {
 
 div#tweets .tweet[rating='1'] button,
 div#tweets .tweet[rating='2'] button,
-div#tweets .tweet[rating='3'] button { opacity: .3; }
+div#tweets .tweet[rating='3'] button,
+div#tweets .tweet[rating='all'] button { opacity: .3; }
 
 div#tweets .tweet button[value='2'] {
 	font-size: 28px;
@@ -220,7 +227,8 @@ div#tweets .tweet button[value='2'] {
 
 div#tweets .tweet[rating='1'] button[value='1'],
 div#tweets .tweet[rating='2'] button[value='2'],
-div#tweets .tweet[rating='3'] button[value='3'] { opacity: 1!important; border: 1px solid #000; background: #4466FF; color: #fff; text-shadow: 2px 2px 2px rgba(0,0,0,.3); 
+div#tweets .tweet[rating='3'] button[value='3'],
+div#tweets .tweet[rating='all'] button[value='all'] { opacity: 1!important; border: 1px solid #000; background: #4466FF; color: #fff; text-shadow: 2px 2px 2px rgba(0,0,0,.3); 
 	-webkit-text-stroke-width: 1px;
 	-webkit-text-stroke-color: rgba(0,0,0,1);
 }
@@ -229,6 +237,18 @@ div#tweets .tweet[rating='1'] button[value='1'] { background: #dd2200;}
 div#tweets .tweet[rating='2'] button[value='2'] { background: #ffcf11;}
 div#tweets .tweet[rating='3'] button[value='3'] { background: #00cc66;}
 
+#tweets .tweets {
+	display: none; 
+	counter-reset: my-badass-counter;
+}
+
+#tweets[rating='3'] .tweets[rating='3'],
+#tweets[rating='2'] .tweets[rating='2'],
+#tweets[rating='1'] .tweets[rating='1'],
+#tweets[rating='0'] .tweets[rating='0'],
+#tweets[rating='all'] .tweets[rating='all'] {
+	display: block;
+}
 
 .fakeButton {
 	position: absolute;
@@ -245,6 +265,29 @@ div#tweets .tweet[rating='3'] button[value='3'] { background: #00cc66;}
 .fake1 { background: #dd2200; }
 .fake2 { background: #ffcf11; }
 .fake3 { background: #00cc66; }
+
+.tweet:hover .rewrite {
+	display: none;
+}
+
+.tweet .rewrite {
+	display: none;
+	position: absolute;
+	top: 70px;
+	right: 12px;
+	width: 190px;
+	height: 20px;
+	text-align: center;
+}
+
+.tweet .rewrite select {
+	vertical-align: top;
+	color: #000;
+	font-size: 14px;
+	padding: 3px; 15px;
+}
+
+/*** TWEET CONTROLS ***/
 
 #viewControls {
 	font-size: 24px;
@@ -267,7 +310,8 @@ span.viewButtons select {
 #viewControls[rating='3'] input[rating='3'],
 #viewControls[rating='2'] input[rating='2'],
 #viewControls[rating='1'] input[rating='1'],
-#viewControls[rating='0'] input[rating='0'] {
+#viewControls[rating='0'] input[rating='0'],
+#viewControls[rating='all'] input[rating='all'] {
 	background: #06d;
 	color: #fff;
 	text-shadow: 1px 1px 1px #000;
@@ -289,17 +333,8 @@ span.viewButtons select {
 #formatting label {
 	
 }
-#tweets .tweets {
-	display: none; 
-	counter-reset: my-badass-counter;
-}
 
-#tweets[rating='3'] .tweets[rating='3'],
-#tweets[rating='2'] .tweets[rating='2'],
-#tweets[rating='1'] .tweets[rating='1'],
-#tweets[rating='0'] .tweets[rating='0'] {
-	display: block;
-}
+/*** PROGRESS ***/
 
 #progress {
 	position: fixed;
@@ -323,25 +358,7 @@ span.viewButtons select {
 	font-style: normal;
 }
 
-#finished { font-size: 36px; text-align: center; margin: 40px 0;}
-
-
-body#rate h2.header {
-	
-}
-
-body#rate #rateFormatting {
-	margin: 0 0 40px;
-}
-
-#audio {
-	opacity: 0;
-}
-
-body#settings textarea {
-	margin-top: 5px;
-	padding: 8px;
-}
+/*** JOEY ***/
 
 #joey {
 	position:fixed;
@@ -377,4 +394,21 @@ body#settings textarea {
 	width: 510px;
 	height: 510px;
 	background-size: 100%;
+}
+
+/*** MISC ***/
+
+#audio {
+	opacity: 0;
+}
+
+#finished { font-size: 36px; text-align: center; margin: 40px 0;}
+
+body#rate #rateFormatting {
+	margin: 0 0 40px;
+}
+
+body#settings textarea {
+	margin-top: 5px;
+	padding: 8px;
 }

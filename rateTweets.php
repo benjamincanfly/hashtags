@@ -34,7 +34,7 @@ while($tweet=mysql_fetch_assoc($q)){
 $body.="<div id='tweets'>";
 
 for($i=0;$i<count($tweets);$i++){
-	$body.='<div class="tweet" tweetid="'.$tweets[$i]['tweet'].'" rating="'.$tweets[$i]['rating'].'"><div class="text">'.$tweets[$i]['text'].'</div><div class="controls"><button name="rating" value="1" tweetid="'.$tweets[$i]['tweet'].'">S</button><button name="rating" value="2" tweetid="'.$tweets[$i]['tweet'].'">S/T</button><button name="rating" value="3" tweetid="'.$tweets[$i]['tweet'].'">T</button></div></div>';
+	$body.='<div class="tweet" tweetid="'.$tweets[$i]['tweet'].'" rating="'.$tweets[$i]['rating'].'"><div class="text">'.$tweets[$i]['text'].'</div><div class="controls"><button name="rating" value="1" tweetid="'.$tweets[$i]['tweet'].'">S</button><button name="rating" value="2" tweetid="'.$tweets[$i]['tweet'].'">S/T</button><button name="rating" value="3" tweetid="'.$tweets[$i]['tweet'].'">T</button></div><div class="rewrite"><select name="rewrite" tweet="'.$tweets[$i]['tweet'].'"><option value="text">Original</option><option value="rewrite">Rewrite</option></select></div></div>';
 }
 
 $body.="</div>";

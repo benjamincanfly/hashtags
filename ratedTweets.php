@@ -24,6 +24,7 @@ $tweets3="";
 $tweets2="";
 $tweets1="";
 $tweets0="";
+$tweetall0="";
 
 //print_r($tweets);
 
@@ -31,11 +32,11 @@ $numOf=array();
 
 for($i=0;$i<count($tweets);$i++){
 	$numOf[$tweets[$i]['rating']]++;
+	$numOf['all']++;
 	
 	$tweetCode='<div class="tweet" tweetid="'.$tweets[$i]['tweet'].'" rating="'.$tweets[$i]['rating'].'"><div class="text">'.$tweets[$i]['text'].'</div></div>';
 	
-	//echo $tweets[$i]['rating']." ";
-	
+	$tweetsall.=$tweetCode;
 	
 	switch ($tweets[$i]['rating']){
 		case '3':
@@ -56,7 +57,7 @@ for($i=0;$i<count($tweets);$i++){
 	}
 }
 
-$body.="<div id='viewControls' rating='3'><span class='viewButtons'><input type='button' which='3' value='Ts (".$numOf[3].")' rating='3'/><input type='button' which='2' value='S/Ts (".$numOf[2].")' rating='2'/><input type='button' which='1' value='Ss (".$numOf[1].")' rating='1'/><input type='button' which='0' value='Un-rated (".$numOf[0].")' rating='0'/></span><div id='formatting'><input type='checkbox' name='includehash' id='includehashtag'/><label for='includehashtag'>Hashtags</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='includejimmy' id='includejimmy'/><label for='includejimmy'>@jimmys</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='includeusername' id='includeusername'/><label for='includeusername'>Usernames</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='dofont' id='dofont'/><label for='dofont'>12 pt Times</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='shownumbers' id='shownumbers'/><label for='shownumbers'>Number & divide by</label> <select name='divideby'><option value='2'>2</option><option value='3' selected='selected'>3</option><option value='4'>4</option></select><!--&nbsp;&nbsp;&nbsp;Sort by: <select name='sort'><option value='tweet'>Newest</option><option value='username'>Username</option></select>--></div></div><br/><br/><div id='tweets' class='read' rating='3'><div id='tweets3' class='tweets' rating='3'>".$tweets3."</div><div id='tweets2' class='tweets' rating='2'>".$tweets2."</div><div id='tweets1' class='tweets' rating='1'>".$tweets1."</div><div id='tweets0' class='tweets' rating='0'>".$tweets0."</div></div>";
+$body.="<div id='viewControls' rating='3'><span class='viewButtons'><input type='button' which='3' value='Ts (".$numOf[3].")' rating='3'/><input type='button' which='2' value='S/Ts (".$numOf[2].")' rating='2'/><input type='button' which='1' value='Ss (".$numOf[1].")' rating='1'/><input type='button' which='0' value='Un-rated (".($numOf[0]>0?$numOf[0]:'0').")' rating='0'/><input type='button' which='all' rating='all' value='All (".$numOf['all'].")'/></span><div id='formatting'><input type='checkbox' name='includehash' id='includehashtag'/><label for='includehashtag'>Hashtags</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='includejimmy' id='includejimmy'/><label for='includejimmy'>@jimmys</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='includeusername' id='includeusername'/><label for='includeusername'>Usernames</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='dofont' id='dofont'/><label for='dofont'>12 pt Times</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='shownumbers' id='shownumbers'/><label for='shownumbers'>Number & divide by</label> <select name='divideby'><option value='2'>2</option><option value='3' selected='selected'>3</option><option value='4'>4</option></select><!--&nbsp;&nbsp;&nbsp;Sort by: <select name='sort'><option value='tweet'>Newest</option><option value='username'>Username</option></select>--></div></div><br/><br/><div id='tweets' class='read' rating='3'><div id='tweets3' class='tweets' rating='3'>".$tweets3."</div><div id='tweets2' class='tweets' rating='2'>".$tweets2."</div><div id='tweets1' class='tweets' rating='1'>".$tweets1."</div><div id='tweets0' class='tweets' rating='0'>".$tweets0."</div><div id='tweetsall' class='tweets' rating='all'>".$tweetsall."</div></div>";
 
 $body.='<script type="text/javascript">var jsonTweets='.json_encode($jsontweets).';</script>';
 $body.='<script type="text/javascript" src="/view.js"></script>';

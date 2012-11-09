@@ -1,8 +1,13 @@
 
 var LNJF={
-	
+	timers:{},
 	rate: function(tweetID, tweetRating){
-		$.ajax("/ajaxRate.php", {type:"post", data:"tweet="+tweetID+"&rating="+tweetRating, error:function(thing){alert("Error!");}});
+		
+		clearTimeout(LNJF.timers['checkRatings']);
+		
+		$.ajax("/ajaxRate.php", {type:"post", data:"tweet="+tweetID+"&rating="+tweetRating, error:function(thing){alert("Error!");},success:function(){
+			LNJF.timers['checkRatings']=setTimeout(LNJF.checkTweetRatings, 1000);
+		}});
 		
 		var button=$(".tweet[tweetid="+tweetID+"] button[value='"+tweetRating+"']");
 		
@@ -25,6 +30,14 @@ var LNJF={
 		$(".tweet[tweetid="+tweetID+"]").attr("rating", tweetRating);
 		LNJF.progress();
 	},
+	updateRatings:function(tweetRatings){
+		for(tweetID in tweetRatings){
+			if(tweetRatings[tweetID]!=LNJF.tweets[tweetID]['rating']){
+				LNJF.tweets[tweetID]['rating']=tweetRatings[tweetID];
+				LNJF.rated(tweetID, tweetRatings[tweetID]);
+			}
+		}
+	},
 	sound: function(tweetRating){
 		if($("input[name=fx]").attr('checked')){
 			$("#audio").html("<embed src='/audio/"+(tweetRating==3?'good':(tweetRating==2?'okay':'bad'))+".wav' autostart='true' loop='false'/>");
@@ -46,11 +59,11 @@ var LNJF={
 			var tweetID=$(this).attr('tweetid');
 			
 			var content="";
-			var tweet=jsonTweets[tweetID];
+			var tweet=LNJF.tweets[tweetID];
 			var text=tweet['text'];
 			
 			if($("#rateFormatting input[name=removestuff]").attr('checked')){
-				text=text.replace(new RegExp('#'+hashtag, 'gim'), '');
+				text=text.replace(new RegExp('#'+LNJF.hashtag, 'gim'), '');
 				text=text.replace(new RegExp('@jimmyfallon', 'gim'), '').replace(new RegExp('@latenightjimmy', 'gim'), '');
 			}
 			
@@ -61,7 +74,16 @@ var LNJF={
 			
 		});
 	},
+	checkTweetRatings:function(){
+		$.ajax("/getRatings.php", {type:"post", dataType:'json', data:"hashtag="+LNJF.hashtag, success:function(data){
+			LNJF.updateRatings(data);
+			LNJF.timers['checkRatings']=setTimeout(LNJF.checkTweetRatings, 1000);
+		}});
+	},
 	init:function(){
+		
+		LNJF.tweets=jsonTweets;
+		LNJF.hashtag=hashtag;
 		
 		$("#tweets .tweet button[name=rating]").live("click", function(){
 			var tweetID=$(this).attr('tweetid');
@@ -80,6 +102,9 @@ var LNJF={
 		LNJF.format();
 		
 		LNJF.progress();
+		
+		LNJF.checkTweetRatings();
+		
 	}
 	
 }
