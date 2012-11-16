@@ -2,7 +2,7 @@
 
 include("config.php");
 
-$qs=sprintf("select tweet, rating from faves where hashtag='%s'",
+$qs=sprintf("select tweet, rating from crossfaves where hashtag='%s'",
 	mysql_real_escape_string($_REQUEST['hashtag']));
 $q=mysql_query($qs);
 

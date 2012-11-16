@@ -6,7 +6,7 @@ $pageID="rate";
 
 $body="";
 
-$qs=sprintf("select * from faves where hashtag='%s' order by tweet DESC", mysql_real_escape_string($config['hashtag']));
+$qs=sprintf("select * from crossfaves where hashtag='%s' order by tweet DESC", mysql_real_escape_string($config['hashtag']));
 $q=mysql_query($qs);
 
 $tweets=array();
@@ -22,7 +22,7 @@ $body.="<h2 class='header'>Rate #".$config['hashtag']." tweets already cross-fav
 
 $body.="<div id='rateFormatting'><input type='checkbox' name='removestuff' id='removestuff' checked='checked'/> <label for='removestuff'>Remove hashtags and @jimmys</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='fx' id='fx' checked='checked'/> <label for='fx'>FX</label></div>";
 
-$qs=sprintf("select * from faves where hashtag='%s' order by tweet DESC", mysql_real_escape_string($config['hashtag']));
+$qs=sprintf("select * from crossfaves where hashtag='%s' order by tweet DESC", mysql_real_escape_string($config['hashtag']));
 $q=mysql_query($qs);
 
 $tweets=array();

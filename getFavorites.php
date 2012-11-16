@@ -55,7 +55,7 @@ function searchArrayForItemsWhereKeyEquals($thisKey, $thisValue, $thisArray){
 	return false;
 }
 
-$qs=sprintf("select * from faves where hashtag='%s' order by tweet DESC", mysql_real_escape_string($config['hashtag']));
+$qs=sprintf("select * from crossfaves where hashtag='%s' order by tweet DESC", mysql_real_escape_string($config['hashtag']));
 $q=mysql_query($qs);
 
 while($fave=mysql_fetch_assoc($q)){
@@ -166,7 +166,7 @@ foreach($alltweets as $tweet){
 	
 	$insertedtweets[$tweet['id_str']]=true;
 	
-	$qs=sprintf("insert into faves (tweet, hashtag, faver, user, text) VALUES ('%s', '%s', '%s', '%s', '%s')",
+	$qs=sprintf("insert into crossfaves (tweet, hashtag, faver, user, text) VALUES ('%s', '%s', '%s', '%s', '%s')",
 		mysql_real_escape_string($tweet['id_str']),
 		mysql_real_escape_string($config['hashtag']),
 		mysql_real_escape_string($tweet['faver']),

@@ -8,7 +8,7 @@ $body="";
 
 $body.="<h2>Rated #".$config['hashtag']." tweets</h2><br/><br/>";
 
-$qs=sprintf("select * from faves where hashtag='%s' order by tweet DESC", mysql_real_escape_string($config['hashtag']));
+$qs=sprintf("select * from crossfaves where hashtag='%s' order by tweet DESC", mysql_real_escape_string($config['hashtag']));
 $q=mysql_query($qs);
 
 $tweets=array();
