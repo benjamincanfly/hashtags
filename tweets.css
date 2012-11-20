@@ -1,0 +1,19 @@
+
+	.tweet {
+	    padding: 20px;
+	    background: #eee;
+	    font-size: 24px;
+	    color: #fff;
+	}
+
+	.tweet.faved {
+	    background: #ddffdf;
+	    outline: 1px solid #adb;
+	}
+
+	input.more {
+	    font-size: 36px;
+	    background: #0ae;
+	    color: #fff;
+	    padding: 30px 40px;
+	}
