@@ -1,6 +1,9 @@
 <?php
 	
-	error_reporting(E_ALL);
+	//error_reporting(E_ALL);
+	
+	error_reporting(0);
+	
 	set_time_limit(360);
 
 	$link=mysql_connect("127.0.0.1", "bapple_ht", "vaejEMjs");
