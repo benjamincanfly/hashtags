@@ -51,15 +51,15 @@ var LNJF={
 						
 						if(divideBy==2){
 							if(i>=numOfThese/2){
-								$(this).attr('color', 'blue');
+								$(this).attr('color', 'green');
 							} else {
 								$(this).attr('color', 'red');
 							}
 						} else if (divideBy==3){
 							if(i>=(numOfThese*(2/3))){
-								$(this).attr('color', 'green');
-							} else if(i>=(numOfThese/3)) {
 								$(this).attr('color', 'blue');
+							} else if(i>=(numOfThese/3)) {
+								$(this).attr('color', 'green');
 							} else {
 								$(this).attr('color', 'red');
 							}
@@ -68,9 +68,9 @@ var LNJF={
 							if(i>=numOfThese*.75){
 								$(this).attr('color', 'yellow');
 							} else if(i>=numOfThese/2) {
-								$(this).attr('color', 'green');
-							} else if(i>=numOfThese/4) {
 								$(this).attr('color', 'blue');
+							} else if(i>=numOfThese/4) {
+								$(this).attr('color', 'green');
 							} else {
 								$(this).attr('color', 'red');
 							}
@@ -87,28 +87,9 @@ var LNJF={
 			}
 			
 	},
-	wrap:function(){
-		$(".tweet").each(function(){
-			
-			var tweetID=$(this).attr('tweetid');
-			
-			var content="";
-			var tweet=jsonTweets[tweetID];
-			var text=tweet['text'];
-			
-			text=text.replace(new RegExp('(#'+hashtag+')([\s]{0,})', 'gim'), "<span class='hash'>\$1 </span>");
-			text=text.replace(new RegExp('(@jimmyfallon)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>").replace(new RegExp('(@latenightjimmy)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>");
-			text=replaceURLWithHTMLLinks(text);
-			text='<a href="http://www.twitter.com/'+tweet['user']+'" class="username">'+tweet['user']+' </a> '+text;
-			
-			//console.info(text);
-			$(this).html(text);
-		});
-		
-	},
 	init:function(){
 		
-		LNJF.wrap();
+		HT.fave.wrap();
 		
 		$("#viewControls input").live("click", function(){
 			var rating=$(this).attr('rating');
@@ -127,4 +108,4 @@ var LNJF={
 	
 }
 
-LNJF.init();
+$(document).ready(LNJF.init);

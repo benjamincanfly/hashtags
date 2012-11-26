@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>LNJF Hashtags</title>
+    <title>Late Night Hashtags</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <link type="text/css" rel="stylesheet" href="/normalize.css"/>
     <link type="text/css" rel="stylesheet" href="/style.css"/>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script type="text/javascript" src="/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="/joey.js"></script>
 	<script type="text/javascript">
 		var hashtag="<?php echo $config['hashtag'] ?>";

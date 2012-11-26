@@ -18,4 +18,16 @@
 		$config[$thisSetting['configKey']] = $thisSetting['configValue'];
 	}
 	
+	$body=$body||"";
+	$head=$head||"";
+	
+	function body($code){
+		global $body;
+		$body.=$code;
+	}
+	
+	function head($code){
+		global $head;
+		$head.=$code;
+	}
 ?>

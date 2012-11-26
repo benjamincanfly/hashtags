@@ -16,6 +16,14 @@ if (CONSUMER_KEY === '' || CONSUMER_SECRET === '') {
 
 /* Build an image link to start the redirect process. */
 $content = '<a href="./redirect.php"><img src="./images/lighter.png" alt="Sign in with Twitter"/></a>';
- 
+
+$body="";
+
+$body.='<h2 id="title">Hello, Hashtagger!</h2><p>Let this app use your Twitter credentials to access tweets.</p>';
+
+if (isset($menu)) { $body.=$menu; }
+if (isset($status_text)) { $body.='<h3>'.$status_text.'</h3>' }
+$body.='<p>'.print_r($content, true).'</p>';
+
 /* Include HTML to display on the page. */
-include('../html.php');
+include('../html2.php');

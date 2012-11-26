@@ -5,7 +5,7 @@ var LNJF={
 		
 		clearTimeout(LNJF.timers['checkRatings']);
 		
-		$.ajax("/ajaxRate.php", {type:"post", data:"tweet="+tweetID+"&rating="+tweetRating, error:function(thing){alert("Error!");},success:function(){
+		$.ajax("/ajax_rateTweet.php", {type:"post", data:"level=3&id="+tweetID+"&rating="+tweetRating, error:function(thing){alert("Error!");},success:function(){
 			LNJF.timers['checkRatings']=setTimeout(LNJF.checkTweetRatings, 1000);
 		}});
 		
@@ -32,8 +32,8 @@ var LNJF={
 	},
 	updateRatings:function(tweetRatings){
 		for(tweetID in tweetRatings){
-			if(tweetRatings[tweetID]!=LNJF.tweets[tweetID]['rating']){
-				LNJF.tweets[tweetID]['rating']=tweetRatings[tweetID];
+			if(tweetRatings[tweetID]!=LNJF.tweets[tweetID]['rating_3']){
+				LNJF.tweets[tweetID]['rating_3']=tweetRatings[tweetID];
 				LNJF.rated(tweetID, tweetRatings[tweetID]);
 			}
 		}
@@ -60,7 +60,7 @@ var LNJF={
 			
 			var content="";
 			var tweet=LNJF.tweets[tweetID];
-			var text=tweet['text'];
+			var text=tweet['tweet'];
 			
 			if($("#rateFormatting input[name=removestuff]").attr('checked')){
 				text=text.replace(new RegExp('#'+LNJF.hashtag, 'gim'), '');
@@ -75,7 +75,7 @@ var LNJF={
 		});
 	},
 	checkTweetRatings:function(){
-		$.ajax("/getRatings.php", {type:"post", dataType:'json', data:"hashtag="+LNJF.hashtag, success:function(data){
+		$.ajax("/ajax_getRatings.php", {type:"post", dataType:'json', data:"hashtag="+LNJF.hashtag, success:function(data){
 			LNJF.updateRatings(data);
 			LNJF.timers['checkRatings']=setTimeout(LNJF.checkTweetRatings, 1000);
 		}});

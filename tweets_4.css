@@ -1,0 +1,109 @@
+
+	/*** TWEET CONTROLS ***/
+
+	#viewControls {
+		font-size: 24px;
+	}
+
+	span.viewButtons input,
+	span.viewButtons select {
+		font-style: normal;
+		display: inline-block;
+		margin: 0 5px 0 0;
+		font-size: 18px;
+		padding: 4px 6px;
+		border: 1px solid #000;
+		background: #111;
+		color: #fff;
+		font-weight: normal;
+		border-radius: 3px;
+	}
+
+	#viewControls[rating='3'] input[rating='3'],
+	#viewControls[rating='2'] input[rating='2'],
+	#viewControls[rating='1'] input[rating='1'],
+	#viewControls[rating='0'] input[rating='0'],
+	#viewControls[rating='all'] input[rating='all'] {
+		background: #06d;
+		color: #fff;
+		text-shadow: 1px 1px 1px #000;
+	}
+
+	#formatting {
+		float: right;
+		font-size: 18px;
+		padding-top: 6px;
+	}
+
+	#formatting input {
+		vertical-align: middle;
+		width: 24px;
+		height: 24px;
+		margin: 1px -4px 0px 0px;
+	}
+
+	#formatting label {
+	
+	}
+
+
+
+	/* 		TWEETS		*/
+	
+	
+	#tweets .tweets {
+		display: none; 
+		counter-reset: my-badass-counter;
+	}
+	
+	#tweets[rating='3'] .tweets[rating='3'],
+	#tweets[rating='2'] .tweets[rating='2'],
+	#tweets[rating='1'] .tweets[rating='1'],
+	#tweets[rating='0'] .tweets[rating='0'],
+	#tweets[rating='all'] .tweets[rating='all'] {
+		display: block;
+	}
+
+	#tweets .tweet[color=red] {
+		background: #fcc;
+	}
+
+	#tweets .tweet[color=blue] {
+		background: #cdf;
+	}
+
+	#tweets .tweet[color=green] {
+		background: #cfc;
+	}
+
+	#tweets .tweet[color=yellow] {
+		background: #feb;
+	}
+
+	div#tweets[dofont=yes] .tweet {
+		font-size: 12px;
+		font-family: Times, Times New Roman, serif;
+		min-height: 0px;
+	}
+
+	div#tweets.shownumbers .tweet:before {
+		content: counter(my-badass-counter);
+		counter-increment: my-badass-counter;
+		display: block;
+		position: absolute;
+		top: 50%;
+		margin-top: -20px;
+		left: -70px;
+		color: #ddd;
+		font-size: 28px;
+		width: 50px;
+		height: 50px;
+		text-align: center;
+
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
