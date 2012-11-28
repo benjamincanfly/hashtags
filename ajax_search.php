@@ -11,9 +11,12 @@
 	$saved_tweets_assoc=array();
 	
 	while($tweet=mysql_fetch_assoc($q)){
+		//$body.=$tweet['tweet_id'].'<br/>';
 		$saved_tweets[]=$tweet['tweet_id'];
 		$saved_tweets_assoc[$tweet['tweet_id']]=true;
 	}
+	
+	//$body.='<pre>'.print_r($saved_tweets, true).'</pre>';
 	
 	// BEGIN: TWITTER OAUTH
 	require_once('twitteroauth/config.php');
@@ -22,9 +25,11 @@
 	$content = $connection->get('account/verify_credentials');
 	// END: TWITTER OAUTH
 	
-	// BEGIN: GET JIMMY TWEET ID
+	/*  				GET JIMMY TWEET ID					*/
+	
 	if(!$_SESSION['jimmy_tweet']||$_SESSION['jimmy_tweet']['hashtag']!=$config['hashtag']){
-		body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
+	
+		//body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
 		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@jimmyfallon')."&result_type=recent";
 		$thing=$connection->get($url);
 		$jimmyTweets=array();
@@ -34,19 +39,23 @@
 			}	
 		}
 		
-		body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
+		//body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
 		
 		$_SESSION['jimmy_tweet'] = array('id'=>$jimmyTweets[count($jimmyTweets)-1]->id, 'hashtag'=>$config['hashtag'], 'ctime'=>$jimmyTweets[count($jimmyTweets)-1]->created_at);
 	} else {
-		body("Jimmy's oldest #".$config['hashtag']." tweet: ".$_SESSION['jimmy_tweet']['id']."<br/>");
+		//body("Jimmy's oldest #".$config['hashtag']." tweet: ".$_SESSION['jimmy_tweet']['id']']."<br/>");
 		
 	}
-	// END: GET JIMMY TWEET ID
+	
+	
+	
+	/*					HAVE JIMMY TWEET ID					*/
 	
 	$_SESSION['lowest_tweet_saved']=count($saved_tweets)?$saved_tweets[count($saved_tweets)-1]:false;
 	$_SESSION['highest_tweet_saved']=count($saved_tweets)?$saved_tweets[0]:false;
 	
-	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt -filter:links')."&result_type=recent&count=1";
+	
+		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt -filter:links')."&result_type=recent&count=1";
 	
 	$thing=$connection->get($url);
 	
@@ -54,7 +63,7 @@
 		$newestTweet=$tweet;
 	}
 	
-	body('Newest tweet: '.$newestTweet->id.'<br/>');
+	//body('Newest tweet: '.$newestTweet->id.'<br/>');
 	
 	//body('<pre>'.print_r($newestTweet,true).'</pre>');
 	
@@ -68,13 +77,14 @@
 	
 	$rough_percent=round(100*$rough_saved/$rough_total_count);
 	
-	body('<br/><h2>Percent scraped: '.$rough_percent.'%</h2>');
+	//body('<br/><h2>Percent scraped: '.$rough_percent.'%</h2>');
+	
 	
 	//body('<pre>'.print_r($_SESSION,true).'</pre>');
 	
 	if(count($saved_tweets)==0){
 		
-		body('None saved.<br/>');
+		//body('None saved.<br/>');
 		
 		/* None saved
 	
@@ -90,7 +100,7 @@
 	
 	} else if($_SESSION['lowest_tweet_saved']!=$_SESSION['jimmy_tweet']['id']) {
 		
-		body('Have not gotten all tweets since Jimmy.<br/>');
+		//body('Have not gotten all tweets since Jimmy.<br/>');
 		
 		/*
 		If we have NOT gotten all of the tweets since Jimmy (lowest saved!=Jimmy),
@@ -99,7 +109,7 @@
 	
 		if($_SESSION['highest_tweet_saved']==$newestTweet->id) {
 				
-			body('Highest saved = highest tweeted.<br/>');
+			//body('Highest saved = highest tweeted.<br/>');
 			/* Highest saved = highest tweeted (almost never)
 
 			Jimmy         retrieved tweets
@@ -113,7 +123,7 @@
 			
 		} else if($_SESSION['highest_tweet_saved']!=$newestTweet->id) {
 			
-			body('Highest saved != highest tweeted.<br/>');
+			//body('Highest saved != highest tweeted.<br/>');
 			
 			/* Or highest tweet saved is not the newest tweet in existence
 			
@@ -131,14 +141,14 @@
 		}
 	} else if ($_SESSION['lowest_tweet_saved']==$_SESSION['jimmy_tweet']['id']){
 		
-		body('Have gotten tweets all the way back to Jimmy.<br/>');
+		//body('Have gotten tweets all the way back to Jimmy.<br/>');
 		
 		/* If we HAVE gotten the tweets back to Jimmy (lowest saved = Jimmy)
 		 then we either have: */
 	
 		if($_SESSION['highest_tweet_saved']==$newestTweet->id) {
 		
-		body('Highest saved = highest tweeted. No nothing.<br/>');
+		//body('Highest saved = highest tweeted. No nothing.<br/>');
 		
 		// $_SESSION['low_target']=false;
 		// $_SESSION['high_target']=false;
@@ -152,7 +162,7 @@
 		
 		} else if($_SESSION['highest_tweet_saved']<$newestTweet->id){
 			
-			body('Highest saved < highest tweeted.<br/>');
+			//body('Highest saved < highest tweeted.<br/>');
 			
 			/* Highest saved < highest tweeted
 
@@ -167,7 +177,7 @@
 		}
 	}
 	
-	body('<br/><hr/><br/>');
+	//body('<br/><hr/><br/>');
 	
 	$all_tweets=array();
 	
@@ -177,12 +187,12 @@
 	
 	$i=0;
 	
-	while(!$finished && $i<25){
+	while(!$finished && $i<5){
 		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt -filter:links');
 		
 		$url.="&result_type=recent&count=100&max_id=".($temp_high_target);
 		
-		$body.="<br/>URL: ".$url."<br/>";
+		//$body.="<br/>URL: ".$url."<br/>";
 		
 		$thing=$connection->get($url);
 		
@@ -198,7 +208,7 @@
 				//body('<br/>equal: '.(intval($tweet->id)-1==intval($_SESSION['low_target'])).'<br/>');
 				
 				if(intval($tweet->id)-1==intval($_SESSION['low_target'])){
-					body('<br/><h1>Found target tweet: '.$tweet->id.'</h1>');
+					//body('<h1>Found target tweet: '.$tweet->id.'</h1>');
 					if((intval($tweet->id))==intval($_SESSION['jimmy_tweet']['id'])){
 						$all_tweets[]=$tweet;
 					}
@@ -210,10 +220,9 @@
 			
 		} else {
 			
-			body('<br/><h1>ERROR</h1><br/>');
-			body('<br/>ERROR:<pre>'.print_r($thing,true).'</pre><br/>');
-			
-			$errors=$thing->errors;
+			$error=true;
+			//body('<h1>ERROR</h1>');
+			//body('<pre>'.print_r($thing,true).'</pre>');
 			
 			$finished=true;
 			break;
@@ -221,11 +230,7 @@
 		
 	}
 	
-	if($errors){
-		body('Error code '.$errors[0]['code'].': '.$errors[0]['message']);
-	}
-	
-	$body.="<br/><h1>Tweets retrieved: ".count($all_tweets)."</h1>";
+	//$body.="<br/><h1>All together: ".count($all_tweets)."</h1>";
 	
 	//$body.='<pre>'.print_r($all_tweets,true).'</pre>';
 	
@@ -250,6 +255,14 @@
 
 	}
 	
-	include("html2.php");
-
+	$response=array();
+	
+	if($error){
+		$response['status']='error';
+		$response['error']="Sorry, there was some kind of error. To try again, reload the page.";
+	} else {
+		$response['status']='ok';
+	}
+	
+	echo json_encode($response);
 ?>

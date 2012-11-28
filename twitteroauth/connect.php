@@ -19,11 +19,13 @@ $content = '<a href="./redirect.php"><img src="./images/lighter.png" alt="Sign i
 
 $body="";
 
-$body.='<h2 id="title">Hello, Hashtagger!</h2><p>Let this app use your Twitter credentials to access tweets.</p>';
+$body.='<h2 id="title">Hello, Late Night Hashtagger!</h2><p>Please let this app use your Twitter credentials to access tweets.</p>';
 
 if (isset($menu)) { $body.=$menu; }
-if (isset($status_text)) { $body.='<h3>'.$status_text.'</h3>' }
+if (isset($status_text)) { $body.='<h3>'.$status_text.'</h3>'; }
 $body.='<p>'.print_r($content, true).'</p>';
 
 /* Include HTML to display on the page. */
 include('../html2.php');
+
+?>

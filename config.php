@@ -1,11 +1,13 @@
 <?php
 	
-	//error_reporting(E_ALL);
+	error_reporting(E_ALL);
 	
-	error_reporting(0);
+	session_start();
+	
+	//error_reporting(0);
 	
 	set_time_limit(360);
-
+	
 	$link=mysql_connect("127.0.0.1", "bapple_ht", "vaejEMjs");
 	mysql_select_db("bapple_ht", $link);
 
@@ -30,4 +32,5 @@
 		global $head;
 		$head.=$code;
 	}
+	
 ?>

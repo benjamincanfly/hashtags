@@ -7,34 +7,9 @@ var LNJF={
 	
 	format:function(){
 		
-		LNJF.quickFormat();
+		HT.fave.quickFormat();
 		LNJF.slowFormat();
 			
-	},
-	quickFormat:function(){
-		
-		$("#tweets").attr('showusername', $("#formatting input[name=includeusername]").attr('checked')?'yes':'no');
-		$("#tweets").attr('showhash', $("#formatting input[name=includehash]").attr('checked')?'yes':'no');
-		$("#tweets").attr('showatjimmy', $("#formatting input[name=includejimmy]").attr('checked')?'yes':'no');
-		$("#tweets").attr('dofont', $("#formatting input[name=dofont]").attr('checked')?'yes':'no');
-		
-		return true;
-		
-		$(".tweet").each(function(){
-			
-			var tweetID=$(this).attr('tweetid');
-			
-			var content="";
-			var tweet=jsonTweets[tweetID];
-			var text=tweet['text'];
-			
-			text=text.replace(/([\s]{1,})/g, ' ');
-			text=$.trim(text);
-			
-			$(".text", this).html(text);
-			
-		});
-		
 	},
 	slowFormat:function(){
 		
@@ -96,7 +71,7 @@ var LNJF={
 			$("#tweets, #viewControls").attr('rating', rating);
 		});
 		
-		$("#formatting input[name=includehash], #formatting input[name=includejimmy], #formatting input[name=includeusername], #formatting input[name=dofont]").live("change", LNJF.quickFormat);
+		$("#formatting input[name=includehash], #formatting input[name=includejimmy], #formatting input[name=includeusername], #formatting input[name=dofont]").live("change", HT.fave.quickFormat);
 		
 		$("#formatting input[name=shownumbers], #formatting select").live("change", function(){
 			LNJF.slowFormat();

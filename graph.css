@@ -1,0 +1,48 @@
+
+	div#graph {
+		position: relative;
+		margin: 55px 0 55px 0;
+		height: 40px;
+		background: #d00;
+		border: 1px solid #000;
+		font-size: 11px;
+	}
+	
+	div#graph > #saved {
+		height: 100%;
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		background: #0d0;
+	}
+	
+	div#graph > #saved > .saved {
+		text-align: center;
+		display: block;
+		padding-top: 12px;
+	}
+	div#graph > #saved .lowest {
+		position: absolute;
+		left: 0px;
+		top: 46px;
+	}
+	
+	div#graph > #saved .highest {
+		position: absolute;
+		right: 0px;
+		top: 46px;
+		text-align: right;
+	}
+	
+	div#graph > .jimmy {
+		position: absolute;
+		left: 0px;
+		top: -30px;
+	}
+	
+	div#graph > .newest {
+		position: absolute;
+		right: 0px;
+		top: -30px;
+		text-align: right;
+	}

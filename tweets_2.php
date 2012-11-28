@@ -8,7 +8,7 @@
 	
 	if($_SESSION['crossfavoriting_id']){
 		
-		$qs=sprintf("select * from tweets where hashtag='%s' and assigned_to_user_id='%s' and rating_1='1'", $config['hashtag'], $_SESSION['crossfavoriting_id']);
+		$qs=sprintf("select * from tweets where hashtag='%s' and assigned_to_user_id='%s' and rating_1='1' order by tweet_id ASC", $config['hashtag'], $_SESSION['crossfavoriting_id']);
 		$q=mysql_query($qs);
 		$tweets=array();
 	
@@ -51,9 +51,11 @@
 		body('>'.$user['name'].'</option>');
 	}
 	
-	body('</select>');
+	body('</select></div>');
 	
-	body('</div><div id="tweets"></div>');
+	body("<div id='rateFormatting'><input type='checkbox' name='removestuff' id='removestuff' checked='checked'/> <label for='removestuff'>Remove usernames, hashtags and @jimmys</label><!--&nbsp;&nbsp;&nbsp;<input type='checkbox' name='fx' id='fx' checked='checked'/> <label for='fx'>FX</label>--></div>");
+	
+	body('<div id="tweets"></div>');
 	
 	if(count($tweets)==0){
 		body('<div id="none">There\'s nothing here yet.</div>');

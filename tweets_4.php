@@ -15,6 +15,13 @@
 		$jsontweets[$tweet['tweet_id']]=$tweet;
 	}
 	
+
+	if(count($tweets)==0){
+		body('<div id="none">There\'s nothing here yet.</div>');
+		include("html2.php");
+		die();
+	}
+	
 	$tweets3="";
 	$tweets2="";
 	$tweets1="";
@@ -29,7 +36,7 @@
 		$numOf[$tweets[$i]['rating_3']]++;
 		$numOf['all']++;
 		
-		$tweetCode='<div class="tweet" tweetid="'.$tweets[$i]['tweet_id'].'" rating="'.$tweets[$i]['rating_3'].'"><div class="text">'.$tweets[$i]['tweet'].'</div></div>';
+		$tweetCode='<div class="tweet" tweet-id="'.$tweets[$i]['tweet_id'].'" rating="'.$tweets[$i]['rating_3'].'"><div class="text">'.$tweets[$i]['tweet'].'</div></div>';
 		
 		$tweetsall.=$tweetCode;
 		
@@ -55,7 +62,7 @@
 	head('<link type="text/css" rel="stylesheet" href="/tweets.css"/>');
 	head('<link type="text/css" rel="stylesheet" href="/tweets_4.css"/>');
 	
-	head('<script type="text/javascript">var jsonTweets='.json_encode($jsontweets).';</script>');
+	head('<script type="text/javascript">var tweets='.json_encode($jsontweets).';</script>');
 	head('<script type="text/javascript" src="/tweet_favoriting.js"></script>');
 	head('<script type="text/javascript" src="/tweets_4.js"></script>');
 	

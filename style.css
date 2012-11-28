@@ -71,7 +71,6 @@ body > #header > .wrap {
 }
 
 body > #content {
-	max-width: 1280px;	
 	margin: 0 auto;
 	padding: 40px;
 	border-radius: 4px;
@@ -80,7 +79,7 @@ body > #content {
 
 body > #content > .wrap {
 	margin: 0 auto;
-	max-width: 1280px;
+	width: 1280px;
 }
 
 select, input, label {
@@ -223,8 +222,9 @@ ol#options a {
 
 #finished { font-size: 36px; text-align: center; margin: 40px 0;}
 
-body#tweets_3 #rateFormatting {
+#rateFormatting {
 	margin: 0 0 40px;
+	text-align: center;
 }
 
 body#settings textarea {

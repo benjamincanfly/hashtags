@@ -9,7 +9,7 @@ var LNJF={
 			LNJF.timers['checkRatings']=setTimeout(LNJF.checkTweetRatings, 1000);
 		}});
 		
-		var button=$(".tweet[tweetid="+tweetID+"] button[value='"+tweetRating+"']");
+		var button=$(".tweet[tweet-id="+tweetID+"] button[value='"+tweetRating+"']");
 		
 		if($("input[name=fx]").attr('checked')){
 			
@@ -27,7 +27,7 @@ var LNJF={
 		}
 	},
 	rated: function(tweetID, tweetRating){
-		$(".tweet[tweetid="+tweetID+"]").attr("rating", tweetRating);
+		$(".tweet[tweet-id="+tweetID+"]").attr("rating", tweetRating);
 		LNJF.progress();
 	},
 	updateRatings:function(tweetRatings){
@@ -53,27 +53,6 @@ var LNJF={
 		$("#progress .STs").text($(".tweet[rating=2]").size());
 		
 	},
-	format:function(){
-		$(".tweet").each(function(){
-			
-			var tweetID=$(this).attr('tweetid');
-			
-			var content="";
-			var tweet=LNJF.tweets[tweetID];
-			var text=tweet['tweet'];
-			
-			if($("#rateFormatting input[name=removestuff]").attr('checked')){
-				text=text.replace(new RegExp('#'+LNJF.hashtag, 'gim'), '');
-				text=text.replace(new RegExp('@jimmyfallon', 'gim'), '').replace(new RegExp('@latenightjimmy', 'gim'), '');
-			}
-			
-			text=text.replace(/([\s]{1,})/g, ' ');
-			text=$.trim(text);
-			
-			$(".text", this).html(text);
-			
-		});
-	},
 	checkTweetRatings:function(){
 		$.ajax("/ajax_getRatings.php", {type:"post", dataType:'json', data:"hashtag="+LNJF.hashtag, success:function(data){
 			LNJF.updateRatings(data);
@@ -82,11 +61,11 @@ var LNJF={
 	},
 	init:function(){
 		
-		LNJF.tweets=jsonTweets;
+		LNJF.tweets=tweets;
 		LNJF.hashtag=hashtag;
 		
 		$("#tweets .tweet button[name=rating]").live("click", function(){
-			var tweetID=$(this).attr('tweetid');
+			var tweetID=$(this).attr('tweet-id');
 			
 			LNJF.rate(tweetID, $(this).val());
 			LNJF.rated(tweetID, $(this).val());
@@ -95,11 +74,8 @@ var LNJF={
 		$("#tweets .tweet button[name=rating]").live("mousedown", function(){
 			LNJF.sound($(this).val());
 		});
-		
-		
-		$("#rateFormatting input").live("change", LNJF.format);
 					
-		LNJF.format();
+		HT.fave.renderTweets();
 		
 		LNJF.progress();
 		
