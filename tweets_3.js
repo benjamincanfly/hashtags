@@ -65,7 +65,7 @@ var LNJF={
 		LNJF.hashtag=hashtag;
 		
 		$("#tweets .tweet button[name=rating]").live("click", function(){
-			var tweetID=$(this).attr('tweet-id');
+			var tweetID=$(this).parents(".tweet:first").attr('tweet-id');
 			
 			LNJF.rate(tweetID, $(this).val());
 			LNJF.rated(tweetID, $(this).val());
