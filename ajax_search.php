@@ -55,7 +55,7 @@
 	$_SESSION['highest_tweet_saved']=count($saved_tweets)?$saved_tweets[0]:false;
 	
 	
-		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt -filter:links')."&result_type=recent&count=1";
+		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt')."&result_type=recent&count=1";
 	
 	$thing=$connection->get($url);
 	
@@ -188,7 +188,7 @@
 	$i=0;
 	
 	while(!$finished && $i<5){
-		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt -filter:links');
+		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
 		$url.="&result_type=recent&count=100&max_id=".($temp_high_target);
 		
@@ -234,6 +234,8 @@
 	
 	//$body.='<pre>'.print_r($all_tweets,true).'</pre>';
 	
+	$inserted_tweets=array();
+	
 	for($i=0;$i<count($all_tweets);$i++){
 
 		if(!$saved_tweets_assoc[$all_tweets[$i]->id]){
@@ -247,7 +249,7 @@
 			);
 			$q=mysql_query($qs);
 			$saved_tweets[$all_tweets[$i]->id]=true;
-			
+			$inserted_tweets=$all_tweets[$i];
 			// $body.=$qs.'<br/>';
 			// $body.="Inserted tweet #".$i.": ".$all_tweets[$i]->id."<br/>";
 			
@@ -259,9 +261,10 @@
 	
 	if($error){
 		$response['status']='error';
-		$response['error']="Sorry, there was some kind of error. To try again, reload the page.";
+		$response['error']="Sorry, there was some kind of error (type ".$response['errors'][0]['code']."). To try again, reload the page.";
 	} else {
 		$response['status']='ok';
+		$response['count']=count($inserted_tweets);
 	}
 	
 	echo json_encode($response);

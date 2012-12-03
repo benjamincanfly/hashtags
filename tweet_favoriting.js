@@ -159,8 +159,11 @@ HT.fave={
 		
 		if(HT.fave.level==1 && typeof(retrieveMoreTweets)!='undefined'){
 			$.ajax('/ajax_search.php', {dataType:'json', success:function(data){
-				if(data['status']=='ok'){
+				console.info('ajax_search.php');
+				if(data['status']=='ok' && data['count']>0){
 					window.location.reload(true);
+				} else if(data['status']=='ok' && data['count']==0){
+					console.info('found zero new tweets');
 				} else if(data['status']=='error') {
 					alert(data['error']);
 				}
@@ -259,6 +262,7 @@ HT.fave={
 		$(".tweet[tweet-id='"+id+"']").attr("tweet-rating", rating);
 	},
 	getMore:function(){
+		console.info('getMore');
 		
 		HT.state.clickable=false;
 		$("#morebutton").val('Retrieving more tweets, please wait ...')

@@ -15,7 +15,7 @@
 		$q=mysql_query($qs);
 		$row=mysql_fetch_assoc($q);
 		$unclaimed=$row['num'];
-
+		
 		if ($unclaimed<500){
 			head('<script type="text/javascript">var retrieveMoreTweets=true;</script>');
 		}

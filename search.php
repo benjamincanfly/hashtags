@@ -46,7 +46,7 @@
 	$_SESSION['lowest_tweet_saved']=count($saved_tweets)?$saved_tweets[count($saved_tweets)-1]:false;
 	$_SESSION['highest_tweet_saved']=count($saved_tweets)?$saved_tweets[0]:false;
 	
-	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt -filter:links')."&result_type=recent&count=1";
+	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt')."&result_type=recent&count=1";
 	
 	$thing=$connection->get($url);
 	
@@ -178,7 +178,7 @@
 	$i=0;
 	
 	while(!$finished && $i<25){
-		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt -filter:links');
+		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
 		$url.="&result_type=recent&count=100&max_id=".($temp_high_target);
 		
@@ -208,12 +208,18 @@
 				$temp_high_target=$tweet->id-1;
 			}
 			
-		} else {
+		} else if ($thing->errors) {
 			
 			body('<br/><h1>ERROR</h1><br/>');
 			body('<br/>ERROR:<pre>'.print_r($thing,true).'</pre><br/>');
 			
 			$errors=$thing->errors;
+			
+			$finished=true;
+			break;
+		} else {
+			
+			body('<br/><h1>Finished!</h1><br/>');
 			
 			$finished=true;
 			break;
