@@ -15,6 +15,7 @@ function isScrolledIntoView(elem)
 
 HT.fave={
 	level:null,
+	timeouts:{},
 	state: {
 		highlighted:false
 	},
@@ -22,25 +23,6 @@ HT.fave={
 	    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 	    return text.replace(exp,"<a href='$1' target=_NEW>$1</a>"); 
 	},
-	/*wrap:function(){
-		$(".tweet").each(function(){
-			
-			var tweetID=$(this).attr('tweet-id');
-			
-			var content="";
-			var tweet=tweets[tweetID];
-			var text=tweet['tweet'];
-			
-			text=text.replace(new RegExp('(#'+hashtag+')([\s]{0,})', 'gim'), "<span class='hash'>\$1 </span>");
-			text=text.replace(new RegExp('(@jimmyfallon)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>").replace(new RegExp('(@latenightjimmy)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>");
-			text=HT.fave.replaceURLWithHTMLLinks(text);
-			text='<a href="http://www.twitter.com/'+tweet['username']+'" class="username">'+tweet['username']+' </a> '+text;
-
-			//console.info(text);
-			$(this).html(text);
-		});
-
-	},*/
 	setVisibleTweets:function(){
 		$(".tweet").each(function(){
 			$(this).attr('visible', isScrolledIntoView(this));
@@ -150,24 +132,36 @@ HT.fave={
 			break;
 		}
 	},
+	jumpStart:function(){
+		console.info('ajax_search.php ...');
+		$.ajax('/ajax_search.php', {dataType:'json', success:function(data){
+			console.info('ajax_search.php finished');
+			
+			if(data['status']=='ok' && data['count']>0){
+				console.info('found '+data['count']+' new tweets');
+				if(unclaimedTweetCount<100){
+					window.location.reload(true);
+				}
+			} else if(data['status']=='ok' && data['count']==0){
+				console.info('found zero new tweets');
+			} else if(data['status']=='error') {
+				alert(data['error']);
+				console.info(data['thing']);
+			} else if(data['status']=='busy'){
+				console.info('Busy. Waiting five seconds ...');
+				HT.fave.timeouts['ajaxWait']=setTimeout(HT.fave.jumpStart, 5000);
+			}
+		}});
+	},
 	init:function(){
 		console.info('init');
 		
-		HT.tweets=typeof(tweets)!='undefined'?tweets:null;
+		HT.tweets=typeof(json_tweets)!='undefined'?json_tweets:null;
 		
 		HT.fave.level=$("body:first").attr('id').replace('tweets_','');
 		
-		if(HT.fave.level==1 && typeof(retrieveMoreTweets)!='undefined'){
-			$.ajax('/ajax_search.php', {dataType:'json', success:function(data){
-				console.info('ajax_search.php');
-				if(data['status']=='ok' && data['count']>0){
-					window.location.reload(true);
-				} else if(data['status']=='ok' && data['count']==0){
-					console.info('found zero new tweets');
-				} else if(data['status']=='error') {
-					alert(data['error']);
-				}
-			}});
+		if(HT.fave.level==1 && typeof(unclaimedTweetCount)!='undefined' && unclaimedTweetCount<=500){
+			HT.fave.jumpStart();
 		}
 		
 		if(HT.fave.level==1){

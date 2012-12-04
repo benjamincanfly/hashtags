@@ -61,7 +61,7 @@ var LNJF={
 	},
 	init:function(){
 		
-		LNJF.tweets=tweets;
+		LNJF.tweets=json_tweets;
 		LNJF.hashtag=hashtag;
 		
 		$("#tweets .tweet button[name=rating]").live("click", function(){

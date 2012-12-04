@@ -20,7 +20,7 @@
 		$tweets[$tweet['tweet_id']]=$tweet;
 	}
 
-	head('<script type="text/javascript">var tweets='.json_encode($tweets).';</script>');
+	head('<script type="text/javascript">var json_tweets='.json_encode($tweets).';</script>');
 	head('<script type="text/javascript" src="/tweet_favoriting.js"></script>');
 	head('<script type="text/javascript" src="/tweets_3.js"></script>');
 

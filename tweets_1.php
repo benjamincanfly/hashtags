@@ -11,14 +11,14 @@
 	
 	if($_SESSION['user_id']){
 		
+		//body('<pre>'.print_r($_SESSION,true).'</pre>');
+		
 		$qs=sprintf("select count(*) as num from tweets where hashtag='%s' and assigned_to_user_id='0'", $config['hashtag']);
 		$q=mysql_query($qs);
 		$row=mysql_fetch_assoc($q);
 		$unclaimed=$row['num'];
 		
-		if ($unclaimed<500){
-			head('<script type="text/javascript">var retrieveMoreTweets=true;</script>');
-		}
+		head('<script type="text/javascript">var unclaimedTweetCount='.$unclaimed.';</script>');
 		
 		$qs=sprintf("select count(*) as num from tweets where hashtag='%s' and assigned_to_user_id='%s'", $config['hashtag'], $_SESSION['user_id']);
 		$q=mysql_query($qs);
@@ -28,12 +28,20 @@
 		
 		$thisPage=$_GET['page']?$_GET['page']:max($numPages,1);
 		
-		if($num==0 && $unclaimed>0){
+		if($num==0 && $unclaimed>=100){
 			$qs=sprintf("update tweets set assigned_to_user_id='%s', assignment_time=CURRENT_TIMESTAMP where assigned_to_user_id='0' and hashtag='%s' order by tweet_id ASC limit 100",
 				mysql_real_escape_string($_SESSION['user_id']),
 				mysql_real_escape_string($config['hashtag']));
 			$q=mysql_query($qs);
 			//body($qs);
+			
+			$qs=sprintf("select count(*) as num from tweets where hashtag='%s' and assigned_to_user_id='%s'", $config['hashtag'], $_SESSION['user_id']);
+			$q=mysql_query($qs);
+			$row=mysql_fetch_assoc($q);
+			$num=$row['num'];
+			$numPages=ceil($num/100);
+			
+			$thisPage=$_GET['page']?$_GET['page']:max($numPages,1);
 		}
 		
 		$qs=sprintf("select * from tweets where hashtag='%s' and assigned_to_user_id='%s' order by assignment_time ASC, tweet_id ASC limit %s,100",
@@ -50,7 +58,7 @@
 			$tweets[$tweet['tweet_id']]=$tweet;
 		}
 		
-		head('<script type="text/javascript">var tweets='.json_encode($tweets).';</script>');
+		head('<script type="text/javascript">var json_tweets='.json_encode($tweets).';</script>');
 		
 	} else {
 		
@@ -100,15 +108,17 @@
 			
 		}
 		body('</select> of the #'.$config['hashtag'].' tweets assigned to you.');
-	} else if ($unclaimed==0){
-		body(' One moment, loading #'.$config['hashtag'].' tweets from Twitter...');
+	} else if ($unclaimed<100){
+		body(' One moment, loading #'.$config['hashtag'].' tweets from Twitter.<br/><br/><b>Please wait for this page to reload automatically!</b>');
 	} else {
 		body(' Here are some tweets for you to favorite.');
 	}
 	
 	body('</div>');
 	
-	body("<div id='rateFormatting'><input type='checkbox' name='removestuff' id='removestuff' checked='checked'/> <label for='removestuff'>Remove usernames, hashtags and @jimmys</label><!--&nbsp;&nbsp;&nbsp;<input type='checkbox' name='fx' id='fx' checked='checked'/> <label for='fx'>FX</label>--></div>");
+	if($num){	
+		body("<div id='rateFormatting'><input type='checkbox' name='removestuff' id='removestuff' checked='checked'/> <label for='removestuff'>Remove usernames, hashtags and @jimmys</label><!--&nbsp;&nbsp;&nbsp;<input type='checkbox' name='fx' id='fx' checked='checked'/> <label for='fx'>FX</label>--></div>");
+	}
 	
 	body('<div id="tweets"></div>');
 	

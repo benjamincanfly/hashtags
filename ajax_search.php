@@ -1,6 +1,20 @@
 <?php
 
 	require_once("config.php");
+
+	$qs=sprintf("select * from config where configKey='searching'");
+	$q=mysql_query($qs);
+	$row=mysql_fetch_assoc($q);
+	
+	if($row['configValue']=='yes'){
+		$response=array();
+		$response['status']='busy';
+		echo json_encode($response);
+		die();
+	} else {
+		$qs=sprintf("update config set configValue='yes' where configKey='searching'");
+		$q=mysql_query($qs);
+	}
 	
 	$qs=sprintf("select tweet_id from tweets where hashtag='%s' order by tweet_id DESC", mysql_real_escape_string($config['hashtag']));
 	//$body.=$qs.'<br/>';
@@ -187,8 +201,10 @@
 	
 	$i=0;
 	
-	while(!$finished && $i<5){
-		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
+	while(!$finished && $i<3){
+		$i++;
+		
+		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
 		$url.="&result_type=recent&count=100&max_id=".($temp_high_target);
 		
@@ -220,7 +236,7 @@
 			
 		} else {
 			
-			$error=true;
+			$error=thing;
 			//body('<h1>ERROR</h1>');
 			//body('<pre>'.print_r($thing,true).'</pre>');
 			
@@ -249,7 +265,7 @@
 			);
 			$q=mysql_query($qs);
 			$saved_tweets[$all_tweets[$i]->id]=true;
-			$inserted_tweets=$all_tweets[$i];
+			$inserted_tweets[]=$all_tweets[$i];
 			// $body.=$qs.'<br/>';
 			// $body.="Inserted tweet #".$i.": ".$all_tweets[$i]->id."<br/>";
 			
@@ -257,11 +273,15 @@
 
 	}
 	
+	$qs=sprintf("update config set configValue='no' where configKey='searching'");
+	$q=mysql_query($qs);
+	
 	$response=array();
 	
 	if($error){
 		$response['status']='error';
-		$response['error']="Sorry, there was some kind of error (type ".$response['errors'][0]['code']."). To try again, reload the page.";
+		$response['error']="Sorry, there was some kind of error (type ".$thing->errors[0]['code']."). To try again, reload the page.";
+		$response['thing']=$error;
 	} else {
 		$response['status']='ok';
 		$response['count']=count($inserted_tweets);

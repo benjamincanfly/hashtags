@@ -14,7 +14,7 @@
 			$tweets[]=$tweet;
 		}
 	
-		head('<script type="text/javascript">var tweets='.json_encode($tweets).';</script>');
+		head('<script type="text/javascript">var json_tweets='.json_encode($tweets).';</script>');
 		
 	}
 	

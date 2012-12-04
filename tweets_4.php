@@ -62,7 +62,7 @@
 	head('<link type="text/css" rel="stylesheet" href="/tweets.css"/>');
 	head('<link type="text/css" rel="stylesheet" href="/tweets_4.css"/>');
 	
-	head('<script type="text/javascript">var tweets='.json_encode($jsontweets).';</script>');
+	head('<script type="text/javascript">var json_tweets='.json_encode($jsontweets).';</script>');
 	head('<script type="text/javascript" src="/tweet_favoriting.js"></script>');
 	head('<script type="text/javascript" src="/tweets_4.js"></script>');
 	
