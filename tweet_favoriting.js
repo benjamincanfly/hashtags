@@ -260,7 +260,6 @@ HT.fave={
 		
 		HT.state.clickable=false;
 		$("#morebutton").val('Retrieving more tweets, please wait ...')
-		console.info('getMore');
 		
 		$.ajax('/ajax_assignMoreTweets.php', {success:function(response){
 			location.href='/tweets_1.php';
