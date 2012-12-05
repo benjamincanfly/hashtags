@@ -72,7 +72,7 @@
 		}
 
 		body('</select></div>');
-		include("html2.php");
+		include("html.php");
 		die();
 		
 	}
@@ -126,6 +126,6 @@
 		body('<div id="more"><input type="button" id="morebutton" value="Get 100 more #'.$config['hashtag'].' tweets"/></div>');
 	}
 	
-	include("html2.php");
+	include("html.php");
 	
 ?>

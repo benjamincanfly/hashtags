@@ -26,6 +26,6 @@ if (isset($status_text)) { $body.='<h3>'.$status_text.'</h3>'; }
 $body.='<p>'.print_r($content, true).'</p>';
 
 /* Include HTML to display on the page. */
-include('../html2.php');
+include('../html.php');
 
 ?>

@@ -58,6 +58,6 @@
 	if(count($tweets)==0){
 		body('<div id="none">There\'s nothing here yet.</div>');
 	}
-	include("html2.php");
+	include("html.php");
 	
 ?>

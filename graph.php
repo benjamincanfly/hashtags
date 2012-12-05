@@ -104,6 +104,6 @@
 	//body('Percent before saved: '.$percent_before_saved.'% (about '.')<br/><br/>');
 	
 	
-	include("html2.php");
+	include("html.php");
 
 ?>

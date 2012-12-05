@@ -7,31 +7,29 @@
     <link type="text/css" rel="stylesheet" href="/normalize.css"/>
     <link type="text/css" rel="stylesheet" href="/style.css"/>
 	<script type="text/javascript" src="/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/script.js"></script>
 	<script type="text/javascript" src="/joey.js"></script>
 	<script type="text/javascript">
 		var hashtag="<?php echo $config['hashtag'] ?>";
 	</script>
+	
+	<?php echo $head; ?>
+	
+	<link rel="stylesheet" href="handheld.css" media="handheld, only screen and (max-device-width:640px)"/>
+	
   </head>
   <body id="<?php echo $pageID ?>">
-	<div id="outer">
-	<h1 id="title"><div class="controls"><a href="/index.php">Main Menu</a><a href="/settings.php">Settings</a><a href="/getFavorites.php">Get Favorites</a><a href="/rateTweets.php">Rate Tweets</a><a href="/ratedTweets.php">View Rated Tweets</a><a id="joeyLink">Joey</a></div>LNJF Hashtags<span class="hashtag">#<?php echo $config['hashtag']?></span></h1>
-    <div id="wrapper">
-      <h2 id="title">Hello, Hashtagger!</h2>
-
-      <p>Let this app use your Twitter credentials to access tweets.</p>
-
-      <?php if (isset($menu)) { ?>
-        <?php echo $menu; ?>
-      <?php } ?>
-    <?php if (isset($status_text)) { ?>
-      <?php echo '<h3>'.$status_text.'</h3>'; ?>
-    <?php } ?>
-    <p>
-        <?php print_r($content); ?>
-    </p>
+	<div id="header">
+		<div class="wrap">
+			<h1 id="title"><a href="/index.php">Late Night Hashtags</a><br/><span id="hashtag" class="hashtag"><em class='one'>#<?php echo $config['hashtag']?></em><em class='two'>Click to set a new hashtag</em></span></h1>
+			<span class="controls"><a href="/tweets_1.php">1) Favorite Tweets</a><a href="/tweets_2.php">2) Cross-Favorite Tweets</a><a href="/tweets_3.php">3) Rate Tweets</a><a href="/tweets_4.php">4) View Rated Tweets</a><a id="joeyLink">Joey</a></span>
+		</div>
 	</div>
-
-    </div>
+	<div id="content">
+		<div class="wrap">
+		    <?php echo $body; ?>
+		</div>
+	</div>
 	<div id="audio"></div>
   </body>
 </html>

@@ -20,7 +20,7 @@ if(!$_POST || $_POST['action']!='go'){
 	
 	$body.="</ul>After clicking 'Get favorites' please be patient, it could take a minute!<br/><br/><form method='post' action='getFavorites.php'><input type='hidden' name='action' value='go'/><input type='submit' value='Get favorites'/></form>";
 	
-	include("html2.php");
+	include("html.php");
 	
 	die();
 }
@@ -187,6 +187,6 @@ foreach($alltweets as $tweet){
 
 $body.= "<h1>Found ".count($alltweets)." faved #".$config['hashtag']." tweets. Added $addedtweets to database.</h1>";
 
-include("html2.php");
+include("html.php");
 
 ?>

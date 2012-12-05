@@ -28,7 +28,7 @@
 
 	if(count($tweets)==0){
 		body('<div id="none">There\'s nothing here yet.</div>');
-		include("html2.php");
+		include("html.php");
 		die();
 	}
 
@@ -41,6 +41,6 @@
 
 	$body.='<div id="progress">You are <span><em class="percent">0</em>%</span> done rating tweets. So far you have <span><em class="Ts">0</em> Ts</span> and <span><em class="STs">0</em> S/Ts</span></div>';
 
-	include("html2.php");
+	include("html.php");
 
 ?>

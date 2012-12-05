@@ -19,6 +19,6 @@ if($_POST){
 
 $body.="<form action='settings.php' method='post'>Hashtag: <input type='text' name='hashtag' value='".$config['hashtag']."'/><br/><br/>Twitter accounts with cross-favorited tweets:<br/><textarea name='favers' cols='35'>".$config['favers']."</textarea><div class='note'>Separate with a space, e.g. <i>thisuser thatuser anotheruser</i></div><br/><input type='submit' value='Save settings'/></form>";
 
-include("html2.php");
+include("html.php");
 
 ?>

@@ -256,6 +256,6 @@
 
 	}
 	
-	include("html2.php");
+	include("html.php");
 
 ?>
