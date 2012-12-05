@@ -67,6 +67,7 @@ body > #header {
 body > #header > .wrap {
 	padding: 20px 0;
 	margin: 0 auto;
+	overflow: auto;
 	width: 1280px;
 }
 
@@ -80,6 +81,7 @@ body > #content {
 body > #content > .wrap {
 	margin: 0 auto;
 	width: 1280px;
+	overflow: auto;
 }
 
 select, input, label {

@@ -1,4 +1,63 @@
 
 	body {
 		background: #000;
+		color: #fff;
+	}
+	
+	a, a:visited {
+		color: #46f;
+	}
+	
+	body > #header > .wrap { padding: 0; width: auto; }
+	
+	#header {
+		display: none;
+	}
+	
+	body > #content {
+		padding: 0px;
+	}
+	
+	body > #content > .wrap { padding: 0; width: auto; }
+	
+	/* * * * * */
+	
+	#iam {
+		padding: 10px;
+		margin: 0;;
+	}
+	
+	#rateFormatting {
+		display: none;
+	}
+	
+	.tweet {
+		margin: 0;
+		border-radius: 0;
+		padding: 15px 10px;
+		border: 0px;
+		color: #fff;
+	}
+	
+	.tweet:nth-child(even) {background: #111; }
+	.tweet:nth-child(odd) {background: #222; }
+	
+	body#tweets_1 .tweet[tweet-rating="1"],
+	body#tweets_1 .tweet[tweet-rating="2"] {
+		color: #000;
+		border: 0px;
+		padding: 15px 10px;
+	}
+	
+	body#tweets_1 .tweet[tweet-state='highlighted'] {
+		border: 0px;
+		padding: 15px 10px;
+	}
+	
+	#more {
+		margin: 10px 0 20px 0;
+	}
+	
+	#more #morebutton {
+		box-shadow: none;
 	}
