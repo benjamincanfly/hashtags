@@ -1,4 +1,10 @@
-
+	
+	.desktop {
+		display: none;
+	}
+	
+	.mobile { display: inline; }
+	
 	html {
 		width: 100%;
 		overflow-x: hidden;
@@ -33,8 +39,9 @@
 		padding: 10px 10px 15px 10px;
 		margin: 0;
 		font-size: 18px;
-		text-align: left;
+		font-weight: bold;
 		border-bottom: 2px solid #666;
+		line-height: 180%;
 	}
 	
 	#rateFormatting {
@@ -65,7 +72,8 @@
 		padding: 15px 10px;
 	}
 	
-	body#tweets_1 .tweet:active {
+	body#tweets_1 .tweet:active,
+	body#tweets_1 .tweet:hover {
 		opacity: 1;
 	}
 	
@@ -82,3 +90,8 @@
 		box-shadow: none;
 		padding: 10px;
 	}
+	
+	#more #morebutton:hover, #more #morebutton:active {
+		opacity: 1;
+	}
+	

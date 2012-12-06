@@ -5,6 +5,10 @@ html {
 	position: relative;
 }
 
+.mobile {
+	display: none;
+}
+
 h1, h2, h3, h4 {
 	margin: 0 0 .5em 0;
 }

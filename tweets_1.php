@@ -92,10 +92,10 @@
 		body('>'.$user['name'].'</option>');
 	}
 	
-	body('</select> !');
+	body('</select><span class="desktop"> !</span>');
 	
 	if($num && $num > 100){
-		body(' You are viewing <select id="page">');
+		body(' <span class="desktop">You are viewing</span><span class="mobile"><br/>Here\'s</span> <select id="page">');
 		for($i=1;$i<=ceil($num/100);$i++){
 			
 			body('<option value="'.$i.'"');
@@ -107,7 +107,7 @@
 			body('>Page '.$i.'</option>');
 			
 		}
-		body('</select> of the #'.$config['hashtag'].' tweets assigned to you.');
+		body('</select> of the #'.$config['hashtag'].' <span class="mobile"><br/></span>tweets assigned to you<span class="desktop">.</span>');
 	} else if ($unclaimed<100){
 		body(' One moment, loading #'.$config['hashtag'].' tweets from Twitter.<br/><br/><b>Please wait for this page to reload automatically!</b>');
 	} else {
