@@ -123,7 +123,8 @@
 	body('<div id="tweets"></div>');
 	
 	if(($num>0 || ($tweets && count($tweets)>0)) && ($thisPage==$numPages)){
-		body('<div id="more"><input type="button" id="morebutton" value="Get 100 more #'.$config['hashtag'].' tweets"/></div>');
+		body('<div id="more"><input type="button" id="morebutton" value="Get 100 more tweets"/></div>');
+		//  #'.$config['hashtag'].' 
 	}
 	
 	include("html.php");
