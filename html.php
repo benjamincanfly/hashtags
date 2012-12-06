@@ -18,7 +18,7 @@
 	<?php echo $head; ?>
 	
 	<link rel="stylesheet" href="handheld.css" media="handheld, only screen and (max-device-width:640px)"/>
-	<!--<link rel="stylesheet" href="handheld.css"/>-->
+	<link rel="stylesheet" href="handheld.css"/>
 	
   </head>
   <body id="<?php echo $pageID ?>">

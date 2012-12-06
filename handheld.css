@@ -30,8 +30,11 @@
 	/* * * * * */
 	
 	#iam {
-		padding: 10px;
-		margin: 0;;
+		padding: 10px 10px 15px 10px;
+		margin: 0;
+		font-size: 18px;
+		text-align: left;
+		border-bottom: 2px solid #666;
 	}
 	
 	#rateFormatting {
