@@ -13,6 +13,8 @@
 		var hashtag="<?php echo $config['hashtag'] ?>";
 	</script>
 	
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1; user-scalable=0;">
+	
 	<?php echo $head; ?>
 	
 	<link rel="stylesheet" href="handheld.css" media="handheld, only screen and (max-device-width:640px)"/>
