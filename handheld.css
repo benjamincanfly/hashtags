@@ -67,4 +67,6 @@
 	
 	#more #morebutton {
 		box-shadow: none;
+		display: block;
+		padding: ;
 	}
