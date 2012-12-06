@@ -50,10 +50,12 @@
 		border-radius: 0;
 		padding: 15px 10px;
 		border: 0px;
+		font-size: 18px;
+		line-height: 1.5em;
 		color: #fff;
 	}
 	
-	.tweet:nth-child(even) {background: #111; }
+	.tweet:nth-child(even) {background: #000; }
 	.tweet:nth-child(odd) {background: #222; }
 	
 	body#tweets_1 .tweet[tweet-rating="1"],
