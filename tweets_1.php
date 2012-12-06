@@ -92,7 +92,7 @@
 		body('>'.$user['name'].'</option>');
 	}
 	
-	body('</select><span class="desktop"> !</span>');
+	body('</select> !');
 	
 	if($num && $num > 100){
 		body(' <span class="desktop">You are viewing</span><span class="mobile"><br/>Here\'s</span> <select id="page">');
@@ -107,7 +107,7 @@
 			body('>Page '.$i.'</option>');
 			
 		}
-		body('</select> of the #'.$config['hashtag'].' <span class="mobile"><br/></span>tweets assigned to you<span class="desktop">.</span>');
+		body('</select> of the <span class="mobile"><br/></span><span class="hash">#'.$config['hashtag'].'</span> tweets<span class="mobile"><br/></span> assigned to you<span class="desktop">.</span>');
 	} else if ($unclaimed<100){
 		body(' One moment, loading #'.$config['hashtag'].' tweets from Twitter.<br/><br/><b>Please wait for this page to reload automatically!</b>');
 	} else {
