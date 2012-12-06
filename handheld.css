@@ -83,7 +83,7 @@
 	}
 	
 	body#tweets_1 .tweet:nth-child(even)[tweet-rating="1"] {background: #bbffcc; }
-	body#tweets_1 .tweet:nth-child(even)[tweet-rating="2"] {background: #fff0b0; }
+	body#tweets_1 .tweet:nth-child(even)[tweet-rating="2"] {background: #ffef7f; }
 	
 	body#tweets_1 .tweet:active,
 	body#tweets_1 .tweet:hover {
