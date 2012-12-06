@@ -35,6 +35,11 @@
 	
 	/* * * * * */
 	
+	#welcome {
+		text-align: center;
+		padding: 20px 10px 5px 10px;
+	}
+	
 	#iam {
 		padding: 10px 10px 15px 10px;
 		margin: 0;
