@@ -228,7 +228,7 @@ HT.fave={
 		text=HT.fave.replaceURLWithHTMLLinks(text);
 		text='<a href="http://www.twitter.com/'+tweet['username']+'" class="username">'+tweet['username']+' </a> '+text;
 		
-		var code='<div class="tweet" tweet-id="'+tweet['tweet_id']+'" tweet-rating="'+(HT.fave.level==1?tweet['rating_1']:tweet['rating_2'])+'">'+text+extraCode+'</div>';
+		var code='<div class="tweet" tweet-id="'+tweet['tweet_id']+'" tweet-rating="'+(HT.fave.level==1?tweet['rating_1']:(HT.fave.level==2?tweet['rating_2']:tweet['rating_3']))+'">'+text+extraCode+'</div>';
 		
 		return code;
 	},

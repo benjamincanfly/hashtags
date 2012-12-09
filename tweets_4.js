@@ -7,9 +7,15 @@ var LNJF={
 	
 	format:function(){
 		
-		HT.fave.quickFormat();
+		LNJF.quickFormat();
 		LNJF.slowFormat();
 			
+	},
+	quickFormat:function(){
+		$("#tweets").attr('showusername', $("#formatting input[name=includeusername]").attr('checked')?'yes':'no');
+		$("#tweets").attr('showhash', $("#formatting input[name=includehash]").attr('checked')?'yes':'no');
+		$("#tweets").attr('showatjimmy', $("#formatting input[name=includejimmy]").attr('checked')?'yes':'no');
+		$("#tweets").attr('dofont', $("#formatting input[name=dofont]").attr('checked')?'yes':'no');
 	},
 	slowFormat:function(){
 		
@@ -64,20 +70,32 @@ var LNJF={
 	},
 	init:function(){
 		
-		HT.fave.wrap();
+		//LNJF.wrap();
+		
+		var tweetCounts=['0'=>0,'1'=>0,'2'=>0,'3'=>0];
+		
+		for(tweet in tweets){
+			tweetCounts[tweets[tweet]['rating_3']]++;
+			var tweetCode=HT.fave.tweetCode(tweets[tweet]);
+			//console.info('appending tweet rated '+tweets[tweet]['rating_3']);
+			$('#tweets > .tweets[rating="'+tweets[tweet]['rating_3']+'"]').append(tweetCode);
+			$('#tweets > .tweets[rating="all"]').append(tweetCode);
+		}
+		
+		//// $("#viewControls");
 		
 		$("#viewControls input").live("click", function(){
 			var rating=$(this).attr('rating');
 			$("#tweets, #viewControls").attr('rating', rating);
 		});
 		
-		$("#formatting input[name=includehash], #formatting input[name=includejimmy], #formatting input[name=includeusername], #formatting input[name=dofont]").live("change", HT.fave.quickFormat);
+		$("#formatting input[name=includehash], #formatting input[name=includejimmy], #formatting input[name=includeusername], #formatting input[name=dofont]").live("change", LNJF.quickFormat);
 		
 		$("#formatting input[name=shownumbers], #formatting select").live("change", function(){
 			LNJF.slowFormat();
 		});
 		
-		LNJF.format();
+		//LNJF.format();
 		
 	}
 	

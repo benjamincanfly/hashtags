@@ -5,7 +5,7 @@ div#tweets .tweet {
 	
 }
 
-div#tweets .tweet .text {
+div#tweets .tweet {
 	padding-right: 220px;
 }
 
@@ -60,10 +60,10 @@ div#tweets .tweet button:active {
 	color: #fff;
 }
 
-div#tweets .tweet[rating='1'] button,
-div#tweets .tweet[rating='2'] button,
-div#tweets .tweet[rating='3'] button,
-div#tweets .tweet[rating='all'] button { opacity: .3; }
+div#tweets .tweet[tweet-rating='1'] button,
+div#tweets .tweet[tweet-rating='2'] button,
+div#tweets .tweet[tweet-rating='3'] button,
+div#tweets .tweet[tweet-rating='all'] button { opacity: .3; }
 
 div#tweets .tweet button[value='2'] {
 	font-size: 28px;
@@ -71,17 +71,17 @@ div#tweets .tweet button[value='2'] {
 	letter-spacing: 2px;
 }
 
-div#tweets .tweet[rating='1'] button[value='1'],
-div#tweets .tweet[rating='2'] button[value='2'],
-div#tweets .tweet[rating='3'] button[value='3'],
-div#tweets .tweet[rating='all'] button[value='all'] { opacity: 1!important; border: 1px solid #000; background: #4466FF; color: #fff; text-shadow: 2px 2px 2px rgba(0,0,0,.3); 
+div#tweets .tweet[tweet-rating='1'] button[value='1'],
+div#tweets .tweet[tweet-rating='2'] button[value='2'],
+div#tweets .tweet[tweet-rating='3'] button[value='3'],
+div#tweets .tweet[tweet-rating='all'] button[value='all'] { opacity: 1!important; border: 1px solid #000; background: #4466FF; color: #fff; text-shadow: 2px 2px 2px rgba(0,0,0,.3); 
 	-webkit-text-stroke-width: 1px;
 	-webkit-text-stroke-color: rgba(0,0,0,1);
 }
 
-div#tweets .tweet[rating='1'] button[value='1'] { background: #dd2200;}
-div#tweets .tweet[rating='2'] button[value='2'] { background: #ffcf11;}
-div#tweets .tweet[rating='3'] button[value='3'] { background: #00cc66;}
+div#tweets .tweet[tweet-rating='1'] button[value='1'] { background: #dd2200;}
+div#tweets .tweet[tweet-rating='2'] button[value='2'] { background: #ffcf11;}
+div#tweets .tweet[tweet-rating='3'] button[value='3'] { background: #00cc66;}
 
 .fakeButton {
 	position: absolute;

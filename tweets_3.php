@@ -14,8 +14,6 @@
 	
 	$tweets=array();
 	
-	$jsontweets=array();
-	
 	while($tweet=mysql_fetch_assoc($q)){
 		$tweets[$tweet['tweet_id']]=$tweet;
 	}

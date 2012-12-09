@@ -5,7 +5,9 @@ var LNJF={
 		
 		clearTimeout(LNJF.timers['checkRatings']);
 		
+		console.info('ajax_rateTweet');
 		$.ajax("/ajax_rateTweet.php", {type:"post", data:"level=3&id="+tweetID+"&rating="+tweetRating, error:function(thing){alert("Error!");},success:function(){
+		console.info('ajax_rateTweet finished');
 			LNJF.timers['checkRatings']=setTimeout(LNJF.checkTweetRatings, 1000);
 		}});
 		
@@ -27,7 +29,7 @@ var LNJF={
 		}
 	},
 	rated: function(tweetID, tweetRating){
-		$(".tweet[tweet-id="+tweetID+"]").attr("rating", tweetRating);
+		$(".tweet[tweet-id="+tweetID+"]").attr("tweet-rating", tweetRating);
 		LNJF.progress();
 	},
 	updateRatings:function(tweetRatings){
