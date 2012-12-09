@@ -236,7 +236,7 @@
 			
 		} else {
 			
-			$error=thing;
+			$error=$thing;
 			//body('<h1>ERROR</h1>');
 			//body('<pre>'.print_r($thing,true).'</pre>');
 			
