@@ -182,7 +182,7 @@
 	while(!$finished && $i<25){
 		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
-		$url.="&result_type=recent&count=100&max_id=".(number_format($temp_high_target));
+		$url.="&result_type=recent&count=100&max_id=".(number_format($temp_high_target,0,'',''));
 		
 		$body.="<br/>URL: ".$url."<br/>";
 		
