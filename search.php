@@ -22,6 +22,8 @@
 	$content = $connection->get('account/verify_credentials');
 	// END: TWITTER OAUTH
 	
+	body('<pre>'.print_r($_SESSSION,true).'</pre>');
+	
 	// BEGIN: GET JIMMY TWEET ID
 	if(!$_SESSION['jimmy_tweet']||$_SESSION['jimmy_tweet']['hashtag']!=$config['hashtag']){
 		body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
@@ -34,7 +36,6 @@
 			}	
 		}
 		
-		body('<pre>'.print_r($_SESSSION,true).'</pre>');
 		body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id_str.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
 		
 		$_SESSION['jimmy_tweet'] = array('id'=>$jimmyTweets[count($jimmyTweets)-1]->id_str, 'hashtag'=>$config['hashtag'], 'ctime'=>$jimmyTweets[count($jimmyTweets)-1]->created_at);
@@ -181,7 +182,7 @@
 	while(!$finished && $i<25){
 		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
-		$url.="&result_type=recent&count=100&max_id=".($temp_high_target);
+		$url.="&result_type=recent&count=100&max_id=".(number_format($temp_high_target));
 		
 		$body.="<br/>URL: ".$url."<br/>";
 		
