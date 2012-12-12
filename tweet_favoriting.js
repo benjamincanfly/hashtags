@@ -217,7 +217,7 @@ HT.fave={
 			extraCode+='<div class="controls"><button name="rating" value="1">S</button><button name="rating" value="2">S/T</button><button name="rating" value="3">T</button></div>';
 		}
 		
-		var text=tweet['tweet'];
+		var text=tweet['tweet']?tweet['tweet']:'';
 		
 		text=text.replace(new RegExp('(#'+hashtag+')([\s]{0,})', 'gim'), "<span class='hash'>\$1 </span>");
 		text=text.replace(new RegExp('(@jimmyfallon)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>").replace(new RegExp('(@latenightjimmy)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>");
