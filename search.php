@@ -37,6 +37,7 @@
 		
 		body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
 		
+		body('<pre>'.print_r($jimmyTweets[count($jimmyTweets)-1],true).'</pre>');
 		$_SESSION['jimmy_tweet'] = array('id'=>$jimmyTweets[count($jimmyTweets)-1]->id, 'hashtag'=>$config['hashtag'], 'ctime'=>$jimmyTweets[count($jimmyTweets)-1]->created_at);
 	} else {
 		body("Jimmy's oldest #".$config['hashtag']." tweet: ".$_SESSION['jimmy_tweet']['id']."<br/>");
