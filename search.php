@@ -34,7 +34,7 @@
 			}	
 		}
 		
-		body('<pre>'.$_SESSSION.'</pre>');
+		body('<pre>'.print_r($_SESSSION,true).'</pre>');
 		body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id_str.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
 		
 		$_SESSION['jimmy_tweet'] = array('id'=>$jimmyTweets[count($jimmyTweets)-1]->id_str, 'hashtag'=>$config['hashtag'], 'ctime'=>$jimmyTweets[count($jimmyTweets)-1]->created_at);
