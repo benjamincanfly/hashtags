@@ -33,7 +33,7 @@
 				$jimmyTweets[]=$tweet;
 			}	
 		}
-		$_SESSION['jimmy_tweet']['id'] = $jimmyTweets[count($jimmyTweets)-1]->id;
+		$_SESSION['jimmy_tweet']['id'] = $jimmyTweets[count($jimmyTweets)-1]->id_str;
 	} else { }
 	
 	//body("Jimmy's oldest #".$config['hashtag']." tweet: ".$_SESSION['jimmy_tweet']['id']."<br/>");
@@ -52,13 +52,13 @@
 		$newestTweet=$tweet;
 	}
 	
-	//body('Newest tweet: '.$newestTweet->id.'<br/>');
+	//body('Newest tweet: '.$newestTweet->id_str.'<br/>');
 	
 	$rough_saved=$_SESSION['highest_tweet_saved']-$_SESSION['lowest_tweet_saved'];
 	
 	$tweet_percentile=count($saved_tweets)/($_SESSION['highest_tweet_saved']-$_SESSION['lowest_tweet_saved']);
 	
-	$tweets_from_jimmy_to_now=$newestTweet->id-$_SESSION['jimmy_tweet']['id'];
+	$tweets_from_jimmy_to_now=$newestTweet->id_str-$_SESSION['jimmy_tweet']['id'];
 	
 	$probable_hashtagged_tweets=$tweet_percentile*$tweets_from_jimmy_to_now;
 	
@@ -73,7 +73,7 @@
 	//$_SESSION['highest_tweet_saved']=75601;
 	
 	$tweetCount=count($saved_tweets);
-	$newestTweetId=$newestTweet->id;
+	$newestTweetId=$newestTweet->id_str;
 	
 	$rough_saved=$_SESSION['highest_tweet_saved']-$_SESSION['lowest_tweet_saved'];
 	
