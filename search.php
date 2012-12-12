@@ -16,6 +16,7 @@
 	}
 	
 	body('<pre>'.print_r($_SESSION, true).'</pre>');
+	
 	// BEGIN: TWITTER OAUTH
 	require_once('twitteroauth/config.php');
 	require_once('twitteroauth/twitteroauth/twitteroauth.php');
@@ -38,6 +39,7 @@
 		body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
 		
 		body('<pre>'.print_r($jimmyTweets[count($jimmyTweets)-1],true).'</pre>');
+		
 		$_SESSION['jimmy_tweet'] = array('id'=>$jimmyTweets[count($jimmyTweets)-1]->id, 'hashtag'=>$config['hashtag'], 'ctime'=>$jimmyTweets[count($jimmyTweets)-1]->created_at);
 	} else {
 		body("Jimmy's oldest #".$config['hashtag']." tweet: ".$_SESSION['jimmy_tweet']['id']."<br/>");
@@ -72,7 +74,7 @@
 	
 	body('<br/><h2>Percent scraped: '.$rough_percent.'%</h2>');
 	
-	//body('<pre>'.print_r($_SESSION,true).'</pre>');
+	body('<pre>'.print_r($_SESSION,true).'</pre>');
 	
 	if(count($saved_tweets)==0){
 		
@@ -179,10 +181,10 @@
 	
 	$i=0;
 	
-	while(!$finished && $i<25){
+	while(!$finished && $i<10){
 		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
-		$url.="&result_type=recent&count=100&since_id=".($_SESSION['jimmy_tweet']['id'])."&max_id=".($temp_high_target);
+		$url.="&result_type=recent&count=100&since_id=".($_SESSION['jimmy_tweet']['id']-1)."&max_id=".($temp_high_target);
 		
 		$body.="<br/>URL: ".$url."<br/>";
 		
