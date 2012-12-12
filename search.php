@@ -22,7 +22,7 @@
 	$content = $connection->get('account/verify_credentials');
 	// END: TWITTER OAUTH
 	
-	body('<pre>'.print_r($_SESSSION,true).'</pre>');
+	body('<pre>'.print_r($_SESSION, true).'</pre>');
 	
 	// BEGIN: GET JIMMY TWEET ID
 	if(!$_SESSION['jimmy_tweet']||$_SESSION['jimmy_tweet']['hashtag']!=$config['hashtag']){
