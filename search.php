@@ -88,7 +88,7 @@
 		*/
 	
 		$_SESSION['high_target']=$newestTweet->id_str;
-		$_SESSION['low_target']=$_SESSION['jimmy_tweet']['id']-1;
+		$_SESSION['low_target']=number_format($_SESSION['jimmy_tweet']['id']-1,0,'','');
 	
 	} else if($_SESSION['lowest_tweet_saved']!=$_SESSION['jimmy_tweet']['id']) {
 		
@@ -111,7 +111,7 @@
 			*/
 			
 			$_SESSION['high_target']=$_SESSION['lowest_tweet_saved']-1;
-			$_SESSION['low_target']=$_SESSION['jimmy_tweet']['id']-1;
+			$_SESSION['low_target']=number_format($_SESSION['jimmy_tweet']['id']-1,0,'','');
 			
 		} else if($_SESSION['highest_tweet_saved']!=$newestTweet->id_str) {
 			
@@ -126,7 +126,7 @@
 			We should find the lowest ID retrieved, retrieve until we hit Jimmy, and start over from the end. */
 															
 			$_SESSION['high_target']=$_SESSION['lowest_tweet_saved']-1;
-			$_SESSION['low_target']=$_SESSION['jimmy_tweet']['id']-1;
+			$_SESSION['low_target']=number_foramt($_SESSION['jimmy_tweet']['id']-1,0,'','');
 			
 			// ... AND THEN RE-START
 			
@@ -164,7 +164,7 @@
 			We should start from the end and go until the highest tweet retrieved. */
 			
 			$_SESSION['high_target']=$newestTweet->id_str;
-			$_SESSION['low_target']=$_SESSION['highest_tweet_saved']-1;
+			$_SESSION['low_target']=number_format($_SESSION['highest_tweet_saved']-1,0,'','');
 			
 		}
 	}
