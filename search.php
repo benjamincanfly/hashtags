@@ -15,6 +15,7 @@
 		$saved_tweets_assoc[$tweet['tweet_id']]=true;
 	}
 	
+	body('<pre>'.print_r($_SESSION, true).'</pre>');
 	// BEGIN: TWITTER OAUTH
 	require_once('twitteroauth/config.php');
 	require_once('twitteroauth/twitteroauth/twitteroauth.php');
