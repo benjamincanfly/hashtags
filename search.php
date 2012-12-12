@@ -142,7 +142,7 @@
 	
 		if($_SESSION['highest_tweet_saved']==$newestTweet->id_str) {
 		
-		body('Highest saved = highest tweeted. No nothing.<br/>');
+		body('Highest saved = highest tweeted. Do nothing.<br/>');
 		
 		// $_SESSION['low_target']=false;
 		// $_SESSION['high_target']=false;
@@ -181,7 +181,7 @@
 	
 	$i=0;
 	
-	while(!$finished && $i<10){
+	while(!$finished && $i<5){
 		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
 		$url.="&result_type=recent&count=100&since_id=".($_SESSION['jimmy_tweet']['id']-1)."&max_id=".($temp_high_target);
@@ -201,9 +201,9 @@
 				
 				//body('<br/>equal: '.(intval($tweet->id_str)-1==intval($_SESSION['low_target'])).'<br/>');
 				
-				if(intval($tweet->id_str)-1==intval($_SESSION['low_target'])){
+				if($tweet->id_str-1==$_SESSION['low_target']){
 					body('<br/><h1>Found target tweet: '.$tweet->id_str.'</h1>');
-					if((intval($tweet->id_str))==intval($_SESSION['jimmy_tweet']['id'])){
+					if($tweet->id_str==$_SESSION['jimmy_tweet']['id']){
 						body('<br/><h1>Found Jimmy tweet: '.$tweet->id_str.'</h1>');
 						$all_tweets[]=$tweet;
 					}
