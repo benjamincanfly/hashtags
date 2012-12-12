@@ -36,7 +36,7 @@
 			}	
 		}
 		
-		body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id_str.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
+		body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.intval($jimmyTweets[count($jimmyTweets)-1]->id_str).' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
 		
 		body('<pre>'.print_r($jimmyTweets[count($jimmyTweets)-1],true).'</pre>');
 		
