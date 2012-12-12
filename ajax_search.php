@@ -53,9 +53,9 @@
 			}	
 		}
 		
-		//body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
+		//body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id_str.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
 		
-		$_SESSION['jimmy_tweet'] = array('id'=>$jimmyTweets[count($jimmyTweets)-1]->id, 'hashtag'=>$config['hashtag'], 'ctime'=>$jimmyTweets[count($jimmyTweets)-1]->created_at);
+		$_SESSION['jimmy_tweet'] = array('id'=>$jimmyTweets[count($jimmyTweets)-1]->id_str, 'hashtag'=>$config['hashtag'], 'ctime'=>$jimmyTweets[count($jimmyTweets)-1]->created_at);
 	} else {
 		//body("Jimmy's oldest #".$config['hashtag']." tweet: ".$_SESSION['jimmy_tweet']['id']']."<br/>");
 		
@@ -77,14 +77,14 @@
 		$newestTweet=$tweet;
 	}
 	
-	//body('Newest tweet: '.$newestTweet->id.'<br/>');
+	//body('Newest tweet: '.$newestTweet->id_str.'<br/>');
 	
 	//body('<pre>'.print_r($newestTweet,true).'</pre>');
 	
 	$rough_saved=$_SESSION['highest_tweet_saved']-$_SESSION['lowest_tweet_saved'];
 	
 	if($newestTweet){
-		$rough_total_count=$newestTweet->id-$_SESSION['jimmy_tweet']['id'];	
+		$rough_total_count=$newestTweet->id_str-$_SESSION['jimmy_tweet']['id'];	
 	} else {
 		$rough_total_count=$_SESSION['highest_tweet_saved']-$_SESSION['jimmy_tweet']['id'];
 	}
@@ -109,7 +109,7 @@
 		
 		*/
 	
-		$_SESSION['high_target']=$newestTweet->id;
+		$_SESSION['high_target']=$newestTweet->id_str;
 		$_SESSION['low_target']=$_SESSION['jimmy_tweet']['id']-1;
 	
 	} else if($_SESSION['lowest_tweet_saved']!=$_SESSION['jimmy_tweet']['id']) {
@@ -121,7 +121,7 @@
 		then we either have:
 		*/
 	
-		if($_SESSION['highest_tweet_saved']==$newestTweet->id) {
+		if($_SESSION['highest_tweet_saved']==$newestTweet->id_str) {
 				
 			//body('Highest saved = highest tweeted.<br/>');
 			/* Highest saved = highest tweeted (almost never)
@@ -135,7 +135,7 @@
 			$_SESSION['high_target']=$_SESSION['lowest_tweet_saved']-1;
 			$_SESSION['low_target']=$_SESSION['jimmy_tweet']['id']-1;
 			
-		} else if($_SESSION['highest_tweet_saved']!=$newestTweet->id) {
+		} else if($_SESSION['highest_tweet_saved']!=$newestTweet->id_str) {
 			
 			//body('Highest saved != highest tweeted.<br/>');
 			
@@ -160,7 +160,7 @@
 		/* If we HAVE gotten the tweets back to Jimmy (lowest saved = Jimmy)
 		 then we either have: */
 	
-		if($_SESSION['highest_tweet_saved']==$newestTweet->id) {
+		if($_SESSION['highest_tweet_saved']==$newestTweet->id_str) {
 		
 		//body('Highest saved = highest tweeted. No nothing.<br/>');
 		
@@ -174,7 +174,7 @@
 			|ooooooooooooooooooooooooooooooooooo|			We should do nothing.
 		*/
 		
-		} else if($_SESSION['highest_tweet_saved']<$newestTweet->id){
+		} else if($_SESSION['highest_tweet_saved']<$newestTweet->id_str){
 			
 			//body('Highest saved < highest tweeted.<br/>');
 			
@@ -185,7 +185,7 @@
 			
 			We should start from the end and go until the highest tweet retrieved. */
 			
-			$_SESSION['high_target']=$newestTweet->id;
+			$_SESSION['high_target']=$newestTweet->id_str;
 			$_SESSION['low_target']=$_SESSION['highest_tweet_saved']-1;
 			
 		}
@@ -216,22 +216,22 @@
 		
 		if($thing->statuses && count($thing->statuses)>0){
 			foreach($thing->statuses as $tweet){
-				//$body.="Tweet #".$tweet->id.' at '.$tweet->created_at.' by '.$tweet->user->screen_name.'</br>';
-				//$lowest_tweet_saved=$tweet->id;
+				//$body.="Tweet #".$tweet->id_str.' at '.$tweet->created_at.' by '.$tweet->user->screen_name.'</br>';
+				//$lowest_tweet_saved=$tweet->id_str;
 				
-				//body('<br/>tweet id = '.($tweet->id).' low target = '.$_SESSION['low_target'].'<br/>');
+				//body('<br/>tweet id = '.($tweet->id_str).' low target = '.$_SESSION['low_target'].'<br/>');
 				
-				//body('<br/>equal: '.(intval($tweet->id)-1==intval($_SESSION['low_target'])).'<br/>');
+				//body('<br/>equal: '.(intval($tweet->id_str)-1==intval($_SESSION['low_target'])).'<br/>');
 				
-				if(intval($tweet->id)-1==intval($_SESSION['low_target'])){
-					//body('<h1>Found target tweet: '.$tweet->id.'</h1>');
-					if((intval($tweet->id))==intval($_SESSION['jimmy_tweet']['id'])){
+				if(intval($tweet->id_str)-1==intval($_SESSION['low_target'])){
+					//body('<h1>Found target tweet: '.$tweet->id_str.'</h1>');
+					if((intval($tweet->id_str))==intval($_SESSION['jimmy_tweet']['id'])){
 						$all_tweets[]=$tweet;
 					}
 					break 2;
 				}
 				$all_tweets[]=$tweet;
-				$temp_high_target=$tweet->id-1;
+				$temp_high_target=$tweet->id_str-1;
 			}
 			
 		} else {
@@ -254,20 +254,20 @@
 	
 	for($i=0;$i<count($all_tweets);$i++){
 
-		if(!$saved_tweets_assoc[$all_tweets[$i]->id]){
+		if(!$saved_tweets_assoc[$all_tweets[$i]->id_str]){
 
 			$qs=sprintf("insert into tweets (tweet_id, username, tweet, ttime, hashtag) VALUES ('%s', '%s', '%s', '%s', '%s')",
-				mysql_real_escape_string($all_tweets[$i]->id),
+				mysql_real_escape_string($all_tweets[$i]->id_str),
 				mysql_real_escape_string($all_tweets[$i]->user->screen_name),
 				mysql_real_escape_string($all_tweets[$i]->text),
 				mysql_real_escape_string(strftime('%Y-%m-%d %H:%M:%S', strtotime($all_tweets[$i]->created_at))),
 				mysql_real_escape_string($config['hashtag'])			
 			);
 			$q=mysql_query($qs);
-			$saved_tweets[$all_tweets[$i]->id]=true;
+			$saved_tweets[$all_tweets[$i]->id_str]=true;
 			$inserted_tweets[]=$all_tweets[$i];
 			// $body.=$qs.'<br/>';
-			// $body.="Inserted tweet #".$i.": ".$all_tweets[$i]->id."<br/>";
+			// $body.="Inserted tweet #".$i.": ".$all_tweets[$i]->id_str."<br/>";
 			
 		}
 
