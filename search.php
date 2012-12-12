@@ -181,7 +181,7 @@
 	while(!$finished && $i<25){
 		$i++;	$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
-		$url.="&result_type=recent&count=100&max_id=".($temp_high_target);
+		$url.="&result_type=recent&count=100&since_id=".($_SESSION['jimmy_tweet']['id']).'&max_id=".($temp_high_target);
 		
 		$body.="<br/>URL: ".$url."<br/>";
 		
@@ -201,6 +201,7 @@
 				if(intval($tweet->id)-1==intval($_SESSION['low_target'])){
 					body('<br/><h1>Found target tweet: '.$tweet->id.'</h1>');
 					if((intval($tweet->id))==intval($_SESSION['jimmy_tweet']['id'])){
+						body('<br/><h1>Found Jimmy tweet: '.$tweet->id.'</h1>');
 						$all_tweets[]=$tweet;
 					}
 					break 2;
