@@ -1,14 +1,14 @@
 
-var LNJF={
+HT.rate={
 	timers:{},
 	rate: function(tweetID, tweetRating){
 		
-		clearTimeout(LNJF.timers['checkRatings']);
+		clearTimeout(HT.rate.timers['checkRatings']);
 		
 		console.info('ajax_rateTweet');
 		$.ajax("/ajax_rateTweet.php", {type:"post", data:"level=3&id="+tweetID+"&rating="+tweetRating, error:function(thing){alert("Error!");},success:function(){
 		console.info('ajax_rateTweet finished');
-			LNJF.timers['checkRatings']=setTimeout(LNJF.checkTweetRatings, 1000);
+			HT.rate.timers['checkRatings']=setTimeout(HT.rate.checkTweetRatings, 1000);
 		}});
 		
 		var button=$(".tweet[tweet-id="+tweetID+"] button[value='"+tweetRating+"']");
@@ -30,13 +30,13 @@ var LNJF={
 	},
 	rated: function(tweetID, tweetRating){
 		$(".tweet[tweet-id="+tweetID+"]").attr("tweet-rating", tweetRating);
-		LNJF.progress();
+		HT.rate.progress();
 	},
 	updateRatings:function(tweetRatings){
 		for(tweetID in tweetRatings){
-			if(tweetRatings[tweetID]!=LNJF.tweets[tweetID]['rating_3']){
-				LNJF.tweets[tweetID]['rating_3']=tweetRatings[tweetID];
-				LNJF.rated(tweetID, tweetRatings[tweetID]);
+			if(tweetRatings[tweetID]!=HT.tweets[tweetID]['rating_3']){
+				HT.tweets[tweetID]['rating_3']=tweetRatings[tweetID];
+				HT.rate.rated(tweetID, tweetRatings[tweetID]);
 			}
 		}
 	},
@@ -56,37 +56,34 @@ var LNJF={
 		
 	},
 	checkTweetRatings:function(){
-		$.ajax("/ajax_getRatings.php", {type:"post", dataType:'json', data:"hashtag="+LNJF.hashtag, success:function(data){
-			LNJF.updateRatings(data);
-			LNJF.timers['checkRatings']=setTimeout(LNJF.checkTweetRatings, 1000);
+		$.ajax("/ajax_getRatings.php", {type:"post", dataType:'json', data:"hashtag="+HT.rate.hashtag, success:function(data){
+			HT.rate.updateRatings(data);
+			HT.rate.timers['checkRatings']=setTimeout(HT.rate.checkTweetRatings, 1000);
 		}});
 	},
 	init:function(){
 		
-		console.info('tweets 3');
-		
-		LNJF.tweets=json_tweets;
-		LNJF.hashtag=hashtag;
+		console.info('tweets_3 init');
 		
 		$("#tweets .tweet button[name=rating]").live("click", function(){
 			var tweetID=$(this).parents(".tweet:first").attr('tweet-id');
 			
-			LNJF.rate(tweetID, $(this).val());
-			LNJF.rated(tweetID, $(this).val());
+			HT.rate.rate(tweetID, $(this).val());
+			HT.rate.rated(tweetID, $(this).val());
 		});
 		
 		$("#tweets .tweet button[name=rating]").live("mousedown", function(){
-			LNJF.sound($(this).val());
+			HT.rate.sound($(this).val());
 		});
 		
-		HT.fave.renderTweets();
+		//HT.fave.renderTweets();
 		
-		LNJF.checkTweetRatings();
+		HT.rate.checkTweetRatings();
 		
-		LNJF.progress();
+		HT.rate.progress();
 		
 	}
 	
 }
 
-LNJF.init();
+$(document).ready(HT.rate.init);

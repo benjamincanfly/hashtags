@@ -37,7 +37,7 @@
 		body('>'.$user['name'].'</option>');
 	}
 	
-	body('</select> ! You are cross-favoriting tweets favorited by <select id="whoiamfavoriting">');
+	body('</select> ! You are cross-favoriting tweets favorited by <select id="whoiamfavoriting"><option>...</option>');
 	
 	$qs=sprintf("select * from users order by name ASC");
 	$q=mysql_query($qs);

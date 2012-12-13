@@ -154,9 +154,10 @@ HT.fave={
 		}});
 	},
 	init:function(){
-		console.info('init');
+		console.info('tweet_favoriting init');
 		
 		HT.tweets=typeof(json_tweets)!='undefined'?json_tweets:null;
+		HT.hashtag=typeof(hashtag)!='undefined'?hashtag:null;
 		
 		HT.fave.level=$("body:first").attr('id').replace('tweets_','');
 		
@@ -233,6 +234,7 @@ HT.fave={
 		return code;
 	},
 	renderTweets:function(tweets){
+		console.info('renderTweets');
 		$('#tweets').html('');
 		for(tweet in tweets){
 			var tweetCode=HT.fave.tweetCode(tweets[tweet]);
