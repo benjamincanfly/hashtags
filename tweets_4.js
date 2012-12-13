@@ -73,14 +73,21 @@ var LNJF={
 		//LNJF.wrap();
 		
 		var tweetCounts=[0,0,0,0];
+		var allCount=0;
 		
 		for(tweet in tweets){
+			allCount++;
 			tweetCounts[tweets[tweet]['rating_3']]++;
 			var tweetCode=HT.fave.tweetCode(tweets[tweet]);
 			//console.info('appending tweet rated '+tweets[tweet]['rating_3']);
 			$('#tweets > .tweets[rating="'+tweets[tweet]['rating_3']+'"]').append(tweetCode);
 			$('#tweets > .tweets[rating="all"]').append(tweetCode);
 		}
+		
+		for(var i=0;i<4;i++){
+			$("#viewControls .viewButtons input[which='"+i+"']").each(function(){ $(this).val($(this).val()+' ('+tweetCounts[i]+')')});;
+		}
+		$("#viewControls .viewButtons input[which='all']").val('All ('+allCount+')');
 		
 		//// $("#viewControls");
 		
