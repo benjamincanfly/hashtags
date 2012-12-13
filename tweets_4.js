@@ -72,7 +72,7 @@ var LNJF={
 		
 		//LNJF.wrap();
 		
-		var tweetCounts=['0'=>0,'1'=>0,'2'=>0,'3'=>0];
+		var tweetCounts=[0,0,0,0];
 		
 		for(tweet in tweets){
 			tweetCounts[tweets[tweet]['rating_3']]++;
