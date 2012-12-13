@@ -46,13 +46,13 @@ var LNJF={
 		}
 	},
 	progress:function(){
-		
-		var percentComplete=Math.floor(($(".tweet").size()-$(".tweet[rating=0]").size())/$(".tweet").size()*100);
+		console.info('progress');
+		var percentComplete=Math.floor(($(".tweet").size()-$(".tweet[tweet-rating='0']").size())/$(".tweet").size()*100);
 		
 		$("#progress .percent").text(percentComplete);
 		
-		$("#progress .Ts").text($(".tweet[rating=3]").size());
-		$("#progress .STs").text($(".tweet[rating=2]").size());
+		$("#progress .Ts").text($(".tweet[tweet-rating='3']").size());
+		$("#progress .STs").text($(".tweet[tweet-rating='2']").size());
 		
 	},
 	checkTweetRatings:function(){
@@ -62,6 +62,8 @@ var LNJF={
 		}});
 	},
 	init:function(){
+		
+		console.info('tweets 3');
 		
 		LNJF.tweets=json_tweets;
 		LNJF.hashtag=hashtag;
@@ -76,12 +78,12 @@ var LNJF={
 		$("#tweets .tweet button[name=rating]").live("mousedown", function(){
 			LNJF.sound($(this).val());
 		});
-					
+		
 		HT.fave.renderTweets();
 		
-		LNJF.progress();
-		
 		LNJF.checkTweetRatings();
+		
+		LNJF.progress();
 		
 	}
 	
