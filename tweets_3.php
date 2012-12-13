@@ -35,7 +35,7 @@
 	$body.="<div id='tweets'></div>";
 
 
-	$body.='<div id="finished">All done! <a href="/ratedTweets.php">View Rated Tweets!</a></div>';
+	$body.='<div id="finished">All done! <a href="/tweets_4.php">View Rated Tweets!</a></div>';
 
 	$body.='<div id="progress">You are <span><em class="percent">0</em>%</span> done rating tweets. So far you have <span><em class="Ts">0</em> Ts</span> and <span><em class="STs">0</em> S/Ts</span></div>';
 
