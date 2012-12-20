@@ -190,6 +190,7 @@
 	echo ($_SESSION['jimmy_tweet']['id']-1).'<br/>';
 	echo ($_SESSION['jimmy_tweet']['id']+1).'<br/>';
 	
+	echo floatval($_SESSION['jimmy_tweet']['id']).'<br/>';
 	echo intval($_SESSION['jimmy_tweet']['id']).'<br/>';
 	echo (intval($_SESSION['jimmy_tweet']['id'])-1).'<br/>';
 	echo (intval($_SESSION['jimmy_tweet']['id'])+1).'<br/>';
