@@ -206,7 +206,9 @@
 		
 		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
-		$url.="&result_type=recent&count=100&since_id=".(intval($_SESSION['jimmy_tweet']['id'])-)."&max_id=".($temp_high_target);
+		// &since_id=".(intval($_SESSION['jimmy_tweet']['id'])-)."
+		
+		$url.="&result_type=recent&count=100&max_id=".($temp_high_target);
 		
 		//$body.="<br/>URL: ".$url."<br/>";
 		
