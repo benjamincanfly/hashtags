@@ -186,6 +186,7 @@
 	
 	echo ($_SESSION['jimmy_tweet']['id']).'<br/>';
 	
+	echo gettype($_SESSION['jimmy_tweet']['id']).'<br/>';
 	echo ($_SESSION['jimmy_tweet']['id']-1).'<br/>';
 	echo ($_SESSION['jimmy_tweet']['id']+1).'<br/>';
 	
