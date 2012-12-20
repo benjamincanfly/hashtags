@@ -181,6 +181,18 @@
 	
 	$i=0;
 	
+	
+	echo "<h1>Ok test</h1>";
+	
+	echo ($_SESSION['jimmy_tweet']['id']).'<br/>';
+	
+	echo $_SESSION['jimmy_tweet']['id']-1.'<br/>';
+	echo $_SESSION['jimmy_tweet']['id']+1.'<br/>';
+	
+	echo intval($_SESSION['jimmy_tweet']['id'])-1.'<br/>';
+	echo intval($_SESSION['jimmy_tweet']['id'])+1.'<br/>';
+	
+	
 	while(!$finished && $i<5){
 		$i++;
 		
