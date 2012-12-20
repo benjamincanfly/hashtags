@@ -56,7 +56,7 @@ HT.rate={
 		
 	},
 	checkTweetRatings:function(){
-		$.ajax("/ajax_getRatings.php", {type:"post", dataType:'json', data:"hashtag="+HT.rate.hashtag, success:function(data){
+		$.ajax("/ajax_getRatings.php", {type:"post", dataType:'json', data:"hashtag="+HT.hashtag, success:function(data){
 			HT.rate.updateRatings(data);
 			HT.rate.timers['checkRatings']=setTimeout(HT.rate.checkTweetRatings, 1000);
 		}});
