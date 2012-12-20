@@ -181,29 +181,13 @@
 	
 	$i=0;
 	
-	
-	echo "<h1>Ok test</h1>";
-	
-	echo ($_SESSION['jimmy_tweet']['id']).'<br/>';
-	
-	echo gettype($_SESSION['jimmy_tweet']['id']).'<br/>';
-	echo ($_SESSION['jimmy_tweet']['id']-1).'<br/>';
-	echo ($_SESSION['jimmy_tweet']['id']+1).'<br/>';
-	
-	echo floatval($_SESSION['jimmy_tweet']['id']).'<br/>';
-	echo (bcadd(floatval($_SESSION['jimmy_tweet']['id']), floatval(-1))).'<br/>';
-	echo intval($_SESSION['jimmy_tweet']['id']).'<br/>';
-	echo (intval($_SESSION['jimmy_tweet']['id'])-1).'<br/>';
-	echo (intval($_SESSION['jimmy_tweet']['id'])+1).'<br/>';
-	
-	
 	while(!$finished && $i<5){
 		$i++;
 		
 		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
 		
-		$url.="&result_type=recent&count=100&since_id=".(($_SESSION['jimmy_tweet']['id'])+(-1))."&max_id=".($temp_high_target);
+		$url.="&result_type=recent&count=100&since_id=".(bcadd(floatval($_SESSION['jimmy_tweet']['id']), floatval(-1)))."&max_id=".($temp_high_target);
 		
 		$body.="<br/>URL: ".$url."<br/>";
 		

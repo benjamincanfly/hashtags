@@ -208,7 +208,7 @@
 		
 		// &since_id=".(intval($_SESSION['jimmy_tweet']['id'])-)."
 		
-		$url.="&result_type=recent&count=100&since_id=".(($_SESSION['jimmy_tweet']['id'])+(-1))."&max_id=".($temp_high_target);
+		$url.="&result_type=recent&count=100&since_id=".(bcadd(floatval($_SESSION['jimmy_tweet']['id']), floatval(-1)))."&max_id=".($temp_high_target);
 		
 		//$body.="<br/>URL: ".$url."<br/>";
 		
