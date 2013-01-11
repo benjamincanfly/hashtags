@@ -113,20 +113,25 @@ HT.fave={
 	},
 	keydown:function(e){
 		HT.fave.setVisibleTweets();
+		console.info(e.which);
 		switch(e.which){
 			case 37:
+			case 100:
 			HT.fave.keys.left();
 			return false;
 			break;
 			case 38:
+			case 104:
 			HT.fave.keys.up();
 			return false;
 			break;
 			case 39:
+			case 102:
 			HT.fave.keys.right();
 			return false;
 			break;
 			case 40:
+			case 98:
 			HT.fave.keys.down();
 			return false;
 			break;

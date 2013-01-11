@@ -1,12 +1,8 @@
 <?php
 
 	require_once("config.php");
-
-	$qs=sprintf("select * from config where configKey='searching'");
-	$q=mysql_query($qs);
-	$row=mysql_fetch_assoc($q);
 	
-	if($row['configValue']=='yes'){
+	if($config['searching']=='yes'){
 		$response=array();
 		$response['status']='busy';
 		echo json_encode($response);
@@ -102,7 +98,7 @@
 		
 		/* None saved
 	
-		Jimmy         
+		Jimmy
 		|-----------------------------------|
 		
 		We should start from the end and go until we hit Jimmy.
@@ -120,12 +116,12 @@
 		If we have NOT gotten all of the tweets since Jimmy (lowest saved!=Jimmy),
 		then we either have:
 		*/
-	
+		
 		if($_SESSION['highest_tweet_saved']==$newestTweet->id_str) {
-				
+			
 			//body('Highest saved = highest tweeted.<br/>');
 			/* Highest saved = highest tweeted (almost never)
-
+			
 			Jimmy         retrieved tweets
 			|-------------oooooooooooooooooooooo|
 			
@@ -146,7 +142,7 @@
 			|-------------ooooooooooooooooo-----|
 			
 			We should find the lowest ID retrieved, retrieve until we hit Jimmy, and start over from the end. */
-															
+			
 			$_SESSION['high_target']=$_SESSION['lowest_tweet_saved']-1;
 			$_SESSION['low_target']=$_SESSION['jimmy_tweet']['id']-1;
 			
@@ -159,27 +155,40 @@
 		
 		/* If we HAVE gotten the tweets back to Jimmy (lowest saved = Jimmy)
 		 then we either have: */
-	
-		if($_SESSION['highest_tweet_saved']==$newestTweet->id_str) {
 		
-		//body('Highest saved = highest tweeted. No nothing.<br/>');
-		
-		// $_SESSION['low_target']=false;
-		// $_SESSION['high_target']=false;
-		
-		$finished=true;
-		/* Highest saved = highest tweeted
-	
-			Jimmy         retrieved tweets
-			|ooooooooooooooooooooooooooooooooooo|			We should do nothing.
-		*/
-		
+		if($_SESSION['highest_tweet_saved']==$newestTweet->id_str && $config['tweetGap']=='no') {
+			
+			//body('Highest saved = highest tweeted. No nothing.<br/>');
+			
+			// $_SESSION['low_target']=false;
+			// $_SESSION['high_target']=false;
+			
+			$finished=true;
+			/* Highest saved = highest tweeted
+			
+				Jimmy         retrieved tweets
+				|ooooooooooooooooooooooooooooooooooo|			We should do nothing.
+			*/
+			
+		} else if($_SESSION['highest_tweet_saved']==$newestTweet->id_str && $config['tweetGap']=='yes') {
+			
+			//body('Highest saved = highest tweeted and got back to Jimmy, but there's a gap. Fill in gap.<br/>');
+			
+			/* Highest saved = highest tweeted but with a gap
+			
+				Jimmy         retrieved tweets
+				|ooooo-------oooooooooooooooooo|			Fill in gap.
+			*/
+			
+			$_SESSION['high_target']=$config['gapUpperTweet']-1;
+			$_SESSION['low_target']=$config['gapLowerTweet']-1;
+			
 		} else if($_SESSION['highest_tweet_saved']<$newestTweet->id_str){
 			
 			//body('Highest saved < highest tweeted.<br/>');
 			
 			/* Highest saved < highest tweeted
-
+			
 			Jimmy      retrieved tweets
 			|oooooooooooooooooooooooooo---------|
 			
@@ -217,6 +226,9 @@
 		//body('<pre>'.print_r($thing,true).'</pre>');
 		
 		if($thing->statuses && count($thing->statuses)>0){
+			
+			$foundTarget=false;
+			$thisTweetID=false;
 			foreach($thing->statuses as $tweet){
 				//$body.="Tweet #".$tweet->id_str.' at '.$tweet->created_at.' by '.$tweet->user->screen_name.'</br>';
 				//$lowest_tweet_saved=$tweet->id_str;
@@ -225,15 +237,37 @@
 				
 				//body('<br/>equal: '.(intval($tweet->id_str)-1==intval($_SESSION['low_target'])).'<br/>');
 				
+				//$config['gap_top'];
+				
+				$thisTweetID=$tweet->id_str;
+				
 				if(intval($tweet->id_str)-1==intval($_SESSION['low_target'])){
-					//body('<h1>Found target tweet: '.$tweet->id_str.'</h1>');
+					body('<h1>Found target tweet: '.$tweet->id_str.'</h1>');
+					body('<h1>(Jimmy tweet)'</h1>');
 					if((intval($tweet->id_str))==intval($_SESSION['jimmy_tweet']['id'])){
+						// If it's Jimmy's tweet we save it, because that means we have not already done so.
 						$all_tweets[]=$tweet;
 					}
+					$foundTarget=true;
 					break 2;
 				}
 				$all_tweets[]=$tweet;
 				$temp_high_target=$tweet->id_str-1;
+			
+			}
+			
+			if(!$foundTarget){
+				$qs=sprintf("update config set configValue='yes' where configKey='tweetGap'");
+				$q=mysql_query($qs);
+
+				$qs=sprintf("update config set configValue='".$thisTweetID."' where configKey='gapUpperTweet'");
+				$q=mysql_query($qs);
+				
+				$qs=sprintf("update config set configValue='".$_SESSION['low_target']+1."' where configKey='gapLowerTweet'");
+				$q=mysql_query($qs);
+			} else {
+				$qs=sprintf("update config set configValue='no' where configKey='tweetGap'");
+				$q=mysql_query($qs);
 			}
 			
 		} else {

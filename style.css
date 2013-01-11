@@ -85,7 +85,6 @@ body > #content {
 body > #content > .wrap {
 	margin: 0 auto;
 	width: 1280px;
-	overflow: auto;
 }
 
 select, input, label {
