@@ -1,7 +1,12 @@
 <?php
 
 	$ajax=isset($_REQUEST['ajax'])?true:false;
-
+	
+	if($ajax){
+		error_reporting(0);
+		ini_set('display_errors', 'Off');
+	}
+	
 	require_once("config.php");
 	
 	if($ajax){
@@ -94,6 +99,8 @@
 	
 	body('<pre>'.print_r($_SESSION,true).'</pre>');
 	
+	$fillingTweetGap=false;
+	
 	if(count($saved_tweets)==0){
 		
 		body('No tweets were already in the database.<br/>');
@@ -175,7 +182,7 @@
 				|ooooooooooooooooooooooooooooooooooo|			We should do nothing.
 			*/
 			
-		} else if($_SESSION['highest_tweet_saved']==$newestTweet->id_str && $config['tweetGap']=='yes') {
+		} else if(/*$_SESSION['highest_tweet_saved']==$newestTweet->id_str && */ $config['tweetGap']=='yes') {
 			
 			$fillingTweetGap=true;
 			body('Highest saved = highest tweeted and got back to Jimmy, but there\'s a gap. Fill in gap between lower tweet id '.$config['gapLowerTweet'].' and upper tweet id '.$config['gapUpperTweet'].'<br/>');
@@ -251,9 +258,9 @@
 				
 					$thisTweetID=$tweet->id_str;
 				
-					if(intval($tweet->id_str)-1==intval($_SESSION['low_target'])){
+					if(bcadd($tweet->id_str, "-1")==$_SESSION['low_target']){
 						body('<br/><h1>Found target tweet: '.$tweet->id_str.'</h1>');
-						if((intval($tweet->id_str))==intval($_SESSION['jimmy_tweet']['id'])){
+						if(($tweet->id_str)==$_SESSION['jimmy_tweet']['id']){
 							body('<h1>(Jimmy tweet)</h1>');
 							// If it's Jimmy's tweet we save it, because that means we have not already done so.
 							$all_tweets[]=$tweet;
@@ -282,6 +289,9 @@
 		
 		}
 		
+		body('<br/>foundTarget: '.($foundTarget==true?'yes':'no'));
+		body('<br/>fillingTweetGap: '.($fillingTweetGap?'yes':'no'));
+		
 		if($foundTarget==false && $gotBackToJimmy && isset($thisTweetID) && $thisTweetID){
 			$qs=sprintf("update config set configValue='yes' where configKey='tweetGap'");
 			$q=mysql_query($qs);
@@ -295,7 +305,7 @@
 			$q=mysql_query($qs);
 			body($qs);
 			
-		} else if ($foundTarget==true && isset($fillingTweetGap)){
+		} else if ($foundTarget==true && $fillingTweetGap==true){
 			$qs=sprintf("update config set configValue='no' where configKey='tweetGap'");
 			$q=mysql_query($qs);
 			body('<br/>'.$qs);

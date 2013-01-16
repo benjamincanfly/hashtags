@@ -15,7 +15,7 @@
 		$limit=100-($num % 100);
 	}         
 	
-	$qs=sprintf("update tweets set assigned_to_user_id='%s', assignment_time=CURRENT_TIMESTAMP where assigned_to_user_id='0' and hashtag='%s' order by tweet_id ASC limit %s",
+	$qs=sprintf("update tweets set assigned_to_user_id='%s', assignment_time=CURRENT_TIMESTAMP where assigned_to_user_id='0' and hashtag='%s' order by id ASC limit %s",
 		mysql_real_escape_string($_SESSION['user_id']),
 		mysql_real_escape_string($config['hashtag']),
 		$limit);
