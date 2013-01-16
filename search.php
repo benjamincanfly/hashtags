@@ -1,6 +1,6 @@
 <?php
 
-	$ajax=$_REQUEST['ajax']?true:false;
+	$ajax=isset($_REQUEST['ajax'])?true:false;
 
 	require_once("config.php");
 	
