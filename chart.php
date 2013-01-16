@@ -50,7 +50,7 @@
 		
 		//body($numOfMinutes);
 		
-		body('<pre>'.print_r($saved_tweets, true).'</pre>');
+		//body('<pre>'.print_r($saved_tweets, true).'</pre>');
 		
 		$tweetCount=count($saved_tweets);
 		
