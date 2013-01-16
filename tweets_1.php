@@ -9,7 +9,7 @@
 	head('<link type="text/css" rel="stylesheet" href="/tweets.css"/>');
 	head('<link type="text/css" rel="stylesheet" href="/tweets_1.css"/>');
 	
-	if($_SESSION['user_id']){
+	if(isset($_SESSION['user_id'])){
 		
 		//body('<pre>'.print_r($_SESSION,true).'</pre>');
 		
@@ -26,7 +26,7 @@
 		$num=$row['num'];
 		$numPages=ceil($num/100);
 		
-		$thisPage=$_GET['page']?$_GET['page']:max($numPages,1);
+		$thisPage=isset($_GET['page'])?$_GET['page']:max($numPages,1);
 		
 		if($num==0 && $unclaimed>=100){
 			$qs=sprintf("update tweets set assigned_to_user_id='%s', assignment_time=CURRENT_TIMESTAMP where assigned_to_user_id='0' and hashtag='%s' order by tweet_id ASC limit 100",
@@ -41,7 +41,7 @@
 			$num=$row['num'];
 			$numPages=ceil($num/100);
 			
-			$thisPage=$_GET['page']?$_GET['page']:max($numPages,1);
+			$thisPage=isset($_GET['page'])?$_GET['page']:max($numPages,1);
 		}
 		
 		$qs=sprintf("select * from tweets where hashtag='%s' and assigned_to_user_id='%s' order by assignment_time ASC, tweet_id ASC limit %s,100",

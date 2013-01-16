@@ -16,7 +16,7 @@
 	
 	for($h=0;$h<count($hashtags);$h++){
 		
-		if($h>0){break;}
+		//if($h>0){break;}
 		
 		$hashtag=$hashtags[$h];
 		
@@ -41,7 +41,7 @@
 		
 		for($i=0;$i<count($saved_tweets);$i++){
 			$thisMinute=floor(strtotime($saved_tweets[$i]['ttime'])/60);
-			$tweetsInMinute[$thisMinute]=$tweetsInMinute[$thisMinute]?($tweetsInMinute[$thisMinute]+1):1;
+			$tweetsInMinute[$thisMinute]=isset($tweetsInMinute[$thisMinute])?($tweetsInMinute[$thisMinute]+1):1;
 		}
 		
 		$numKeys=array_keys($tweetsInMinute);
@@ -64,19 +64,29 @@
 		
 		$measures="";
 		
+		$numOfHours=0;
+		$origHour=false;
+		
+		//echo $numOfMinutes." minutes<br/>";
+		
 		for($i=$numKeys[0];$i<$numKeys[count($tweetsInMinute)-1];$i++){
 			
-			if(!$tweetsInMinute[$i]){$j++; continue;}
-			
-			$pixels.='<div style="left:'.$j.'px;height:'.$tweetsInMinute[$i].'px;"></div>';
-			$most=max($most, $tweetsInMinute[$i]);
+			if(!isset($tweetsInMinute[$i])){$j++; continue;}
 			
 			$thisHour=strftime('%H', $i*60);
 			
+			if(!$origHour){$origHour=$thisHour;}
+			
+			$pixels.='<div style="left:'.((($i-$numKeys[0])/1440)*100).'%;height:'.$tweetsInMinute[$i].'px;"></div>';
+			$most=max($most, $tweetsInMinute[$i]);
+			
 			if($thisHour!=$hour){
+				$numOfHours++;
 				$hour=$thisHour;
-				$measures.='<div class="hour" style="left:'.$j.'px;">'.$thisHour.'</div>';
+				$measures.='<div class="hour" style="left:'.((($i-$numKeys[0])/1440)*100).'%;">'.$thisHour.'</div>';
 			}
+			
+			if($numOfHours>=10 && $thisHour>=$origHour){break;}
 			
 			$j++;
 		}

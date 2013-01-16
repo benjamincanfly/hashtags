@@ -1,7 +1,7 @@
 <?php
-	
-	//error_reporting(E_ALL);
-	error_reporting(0);
+
+	error_reporting(E_ALL);
+	ini_set('display_errors', 'On');
 	
 	session_start();
 	
@@ -20,8 +20,8 @@
 		$config[$thisSetting['configKey']] = $thisSetting['configValue'];
 	}
 	
-	$body=$body||"";
-	$head=$head||"";
+	$body=isset($body)?$body:"";
+	$head=isset($head)?$head:"";
 	
 	function body($code){
 		global $body;

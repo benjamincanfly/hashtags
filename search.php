@@ -210,7 +210,7 @@
 	
 	$all_tweets=array();
 	
-	$finished=$finished||false;
+	$finished=isset($finished) ? $finished : false;
 	
 	$temp_high_target=$_SESSION['high_target'];
 	
@@ -218,7 +218,8 @@
 	
 	$foundTarget=false;
 	
-	if(!$cancel){
+	
+	if(!isset($cancel)){
 		
 		while(!$finished && $i<3){
 			$i++;
@@ -280,8 +281,8 @@
 			}
 		
 		}
-	
-		if(!$foundTarget && $gotBackToJimmy){
+		
+		if($foundTarget==false && $gotBackToJimmy && isset($thisTweetID) && $thisTweetID){
 			$qs=sprintf("update config set configValue='yes' where configKey='tweetGap'");
 			$q=mysql_query($qs);
 
@@ -294,22 +295,22 @@
 			$q=mysql_query($qs);
 			body($qs);
 			
-		} else if ($foundTarget && $fillingTweetGap){
+		} else if ($foundTarget==true && isset($fillingTweetGap)){
 			$qs=sprintf("update config set configValue='no' where configKey='tweetGap'");
 			$q=mysql_query($qs);
 			body('<br/>'.$qs);
 		}
-	
+		
 		$body.="<br/><h1>Tweets gotten: ".count($all_tweets)."</h1>";
-	
+		
 		//$body.='<pre>'.print_r($all_tweets,true).'</pre>';
-	
+		
 		$inserted_tweets=array();
-	
+		
 		for($i=0;$i<count($all_tweets);$i++){
-
-			if(!$saved_tweets_assoc[$all_tweets[$i]->id_str]){
-
+			
+			if(!isset($saved_tweets_assoc[$all_tweets[$i]->id_str])){
+				
 				$qs=sprintf("insert into tweets (tweet_id, username, tweet, ttime, hashtag) VALUES ('%s', '%s', '%s', '%s', '%s')",
 					mysql_real_escape_string($all_tweets[$i]->id_str),
 					mysql_real_escape_string($all_tweets[$i]->user->screen_name),
@@ -329,7 +330,10 @@
 		
 	}
 	
-	if(count($inserted_tweets)){
+	//include("html.php");
+	//die();
+	
+	if(isset($inserted_tweets) && count($inserted_tweets)){
 		body('<br/>Inserted '.count($inserted_tweets)." tweets");
 	} else {
 		body('<br/>Did not insert any tweets.');
@@ -340,13 +344,13 @@
 	
 	$response=array();
 	
-	if($error){
+	if(isset($error)){
 		$response['status']='error';
 		$response['error']="Sorry, there was some kind of error (type ".$thing->errors[0]['code']."). To try again, reload the page.";
 		$response['thing']=$error;
 	} else {
 		$response['status']='ok';
-		$response['count']=count($inserted_tweets);
+		$response['count']=isset($inserted_tweets)?count($inserted_tweets):0;
 	}
 	
 	if($ajax){
