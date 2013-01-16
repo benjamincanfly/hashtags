@@ -90,13 +90,13 @@
 	
 	$rough_percent=round(100*$rough_saved/$rough_total_count);
 	
-	body('<br/><h2>Percent scraped: '.$rough_percent.'%</h2>');
+	body('<br/><h2>Approximate percent of tweets already scraped: '.$rough_percent.'%</h2>');
 	
 	body('<pre>'.print_r($_SESSION,true).'</pre>');
 	
 	if(count($saved_tweets)==0){
 		
-		body('None saved.<br/>');
+		body('No tweets were already in the database.<br/>');
 		
 		/* None saved
 	
@@ -155,17 +155,20 @@
 		
 		body('Have gotten tweets all the way back to Jimmy.<br/>');
 		
+		$gotBackToJimmy=true;
+		
 		/* If we HAVE gotten the tweets back to Jimmy (lowest saved = Jimmy)
 		 then we either have: */
 		
 		if($_SESSION['highest_tweet_saved']==$newestTweet->id_str && $config['tweetGap']=='no') {
 			
-			body('Highest saved = highest tweeted. No nothing.<br/>');
+			body('Highest saved = highest tweeted. Do nothing.<br/>');
 			
 			// $_SESSION['low_target']=false;
 			// $_SESSION['high_target']=false;
 			
 			$finished=true;
+			$cancel = true;
 			/* Highest saved = highest tweeted
 			
 				Jimmy         retrieved tweets
@@ -174,6 +177,7 @@
 			
 		} else if($_SESSION['highest_tweet_saved']==$newestTweet->id_str && $config['tweetGap']=='yes') {
 			
+			$fillingTweetGap=true;
 			body('Highest saved = highest tweeted and got back to Jimmy, but there\'s a gap. Fill in gap between lower tweet id '.$config['gapLowerTweet'].' and upper tweet id '.$config['gapUpperTweet'].'<br/>');
 			
 			/* Highest saved = highest tweeted but with a gap
@@ -212,113 +216,123 @@
 	
 	$i=0;
 	
-	while(!$finished && $i<3){
-		$i++;
+	$foundTarget=false;
+	
+	if(!$cancel){
 		
-		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
+		while(!$finished && $i<3){
+			$i++;
 		
-		// &since_id=".(intval($_SESSION['jimmy_tweet']['id'])-)."
+			$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt');
 		
-		$url.="&result_type=recent&count=100&since_id=".(bcadd(floatval($_SESSION['jimmy_tweet']['id']), floatval(-1)))."&max_id=".($temp_high_target);
+			// &since_id=".(intval($_SESSION['jimmy_tweet']['id'])-)."
 		
-		$body.="<br/>URL: ".$url."<br/>";
+			$url.="&result_type=recent&count=100&since_id=".(bcadd($_SESSION['jimmy_tweet']['id'], "-1"))."&max_id=".($temp_high_target);
 		
-		$thing=$connection->get($url);
+			$body.="<br/>URL: ".$url."<br/>";
 		
-		//body('<pre>'.print_r($thing,true).'</pre>');
+			$thing=$connection->get($url);
 		
-		if($thing->statuses && count($thing->statuses)>0){
+			//body('<pre>'.print_r($thing,true).'</pre>');
+		
+			if($thing->statuses && count($thing->statuses)>0){
 			
-			$foundTarget=false;
-			$thisTweetID=false;
-			foreach($thing->statuses as $tweet){
-				//$body.="Tweet #".$tweet->id_str.' at '.$tweet->created_at.' by '.$tweet->user->screen_name.'</br>';
-				//$lowest_tweet_saved=$tweet->id_str;
+				$thisTweetID=false;
+				foreach($thing->statuses as $tweet){
+					//$body.="Tweet #".$tweet->id_str.' at '.$tweet->created_at.' by '.$tweet->user->screen_name.'</br>';
+					//$lowest_tweet_saved=$tweet->id_str;
 				
-				//body('<br/>tweet id = '.($tweet->id_str).' low target = '.$_SESSION['low_target'].'<br/>');
+					//body('<br/>tweet id = '.($tweet->id_str).' low target = '.$_SESSION['low_target'].'<br/>');
 				
-				//body('<br/>equal: '.(intval($tweet->id_str)-1==intval($_SESSION['low_target'])).'<br/>');
+					//body('<br/>equal: '.(intval($tweet->id_str)-1==intval($_SESSION['low_target'])).'<br/>');
 				
-				//$config['gap_top'];
+					//$config['gap_top'];
 				
-				$thisTweetID=$tweet->id_str;
+					$thisTweetID=$tweet->id_str;
 				
-				if(intval($tweet->id_str)-1==intval($_SESSION['low_target'])){
-					body('<br/><h1>Found target tweet: '.$tweet->id_str.'</h1>');
-					if((intval($tweet->id_str))==intval($_SESSION['jimmy_tweet']['id'])){
-						body('<h1>(Jimmy tweet)</h1>');
-						// If it's Jimmy's tweet we save it, because that means we have not already done so.
-						$all_tweets[]=$tweet;
+					if(intval($tweet->id_str)-1==intval($_SESSION['low_target'])){
+						body('<br/><h1>Found target tweet: '.$tweet->id_str.'</h1>');
+						if((intval($tweet->id_str))==intval($_SESSION['jimmy_tweet']['id'])){
+							body('<h1>(Jimmy tweet)</h1>');
+							// If it's Jimmy's tweet we save it, because that means we have not already done so.
+							$all_tweets[]=$tweet;
+						}
+						$foundTarget=true;
+						break 2;
 					}
-					$foundTarget=true;
-					break 2;
+					$all_tweets[]=$tweet;
+					$temp_high_target=$tweet->id_str-1;
+			
 				}
-				$all_tweets[]=$tweet;
-				$temp_high_target=$tweet->id_str-1;
 			
+			} else if($thing->errors){
+			
+				$error=$thing;
+				body('<h1>ERROR</h1>');
+				body('<pre>'.print_r($thing,true).'</pre>');
+			
+				$finished=true;
+				break;
+			} else {	
+				body('<h1>Error or just no tweets to find.</h1>');
+				$finished=true;
+				break;
 			}
-			
-			if(!$foundTarget){
-				$qs=sprintf("update config set configValue='yes' where configKey='tweetGap'");
-				$q=mysql_query($qs);
+		
+		}
+	
+		if(!$foundTarget && $gotBackToJimmy){
+			$qs=sprintf("update config set configValue='yes' where configKey='tweetGap'");
+			$q=mysql_query($qs);
 
-				$qs=sprintf("update config set configValue='".$thisTweetID."' where configKey='gapUpperTweet'");
+			body('<br/>'.$qs.'<br/>');
+			$qs=sprintf("update config set configValue='".$thisTweetID."' where configKey='gapUpperTweet'");
+			$q=mysql_query($qs);
+
+			body($qs.'<br/>');
+			$qs=sprintf("update config set configValue='".($_SESSION['low_target']+1)."' where configKey='gapLowerTweet'");
+			$q=mysql_query($qs);
+			body($qs);
+			
+		} else if ($foundTarget && $fillingTweetGap){
+			$qs=sprintf("update config set configValue='no' where configKey='tweetGap'");
+			$q=mysql_query($qs);
+			body('<br/>'.$qs);
+		}
+	
+		$body.="<br/><h1>Tweets gotten: ".count($all_tweets)."</h1>";
+	
+		//$body.='<pre>'.print_r($all_tweets,true).'</pre>';
+	
+		$inserted_tweets=array();
+	
+		for($i=0;$i<count($all_tweets);$i++){
+
+			if(!$saved_tweets_assoc[$all_tweets[$i]->id_str]){
+
+				$qs=sprintf("insert into tweets (tweet_id, username, tweet, ttime, hashtag) VALUES ('%s', '%s', '%s', '%s', '%s')",
+					mysql_real_escape_string($all_tweets[$i]->id_str),
+					mysql_real_escape_string($all_tweets[$i]->user->screen_name),
+					mysql_real_escape_string($all_tweets[$i]->text),
+					mysql_real_escape_string(strftime('%Y-%m-%d %H:%M:%S', strtotime($all_tweets[$i]->created_at))),
+					mysql_real_escape_string($config['hashtag'])			
+				);
 				$q=mysql_query($qs);
-				
-				$qs=sprintf("update config set configValue='".($_SESSION['low_target']+1)."' where configKey='gapLowerTweet'");
-				$q=mysql_query($qs);
-			} else {
-				$qs=sprintf("update config set configValue='no' where configKey='tweetGap'");
-				$q=mysql_query($qs);
+				$saved_tweets[$all_tweets[$i]->id_str]=true;
+				$inserted_tweets[]=$all_tweets[$i];
+				// $body.=$qs.'<br/>';
+				// $body.="Inserted tweet #".$i.": ".$all_tweets[$i]->id_str."<br/>";
+			
 			}
-			
-		} else if($thing->errors){
-			
-			$error=$thing;
-			body('<h1>ERROR</h1>');
-			body('<pre>'.print_r($thing,true).'</pre>');
-			
-			$finished=true;
-			break;
-		} else {	
-			body('<h1>Error or just no tweets to find.</h1>');
-			$finished=true;
-			break;
+
 		}
 		
-	}
-	
-	//$body.="<br/><h1>All together: ".count($all_tweets)."</h1>";
-	
-	//$body.='<pre>'.print_r($all_tweets,true).'</pre>';
-	
-	$inserted_tweets=array();
-	
-	for($i=0;$i<count($all_tweets);$i++){
-
-		if(!$saved_tweets_assoc[$all_tweets[$i]->id_str]){
-
-			$qs=sprintf("insert into tweets (tweet_id, username, tweet, ttime, hashtag) VALUES ('%s', '%s', '%s', '%s', '%s')",
-				mysql_real_escape_string($all_tweets[$i]->id_str),
-				mysql_real_escape_string($all_tweets[$i]->user->screen_name),
-				mysql_real_escape_string($all_tweets[$i]->text),
-				mysql_real_escape_string(strftime('%Y-%m-%d %H:%M:%S', strtotime($all_tweets[$i]->created_at))),
-				mysql_real_escape_string($config['hashtag'])			
-			);
-			$q=mysql_query($qs);
-			$saved_tweets[$all_tweets[$i]->id_str]=true;
-			$inserted_tweets[]=$all_tweets[$i];
-			// $body.=$qs.'<br/>';
-			// $body.="Inserted tweet #".$i.": ".$all_tweets[$i]->id_str."<br/>";
-			
-		}
-
 	}
 	
 	if(count($inserted_tweets)){
-		body('Inserted '.count($inserted_tweets)." tweets");
+		body('<br/>Inserted '.count($inserted_tweets)." tweets");
 	} else {
-		body('Did not insert any tweets.');
+		body('<br/>Did not insert any tweets.');
 	}
 	
 	$qs=sprintf("update config set configValue='no' where configKey='searching'");

@@ -25,7 +25,12 @@
 	
 	function body($code){
 		global $body;
-		$body.=$code;
+		$body.=$code.'';
+	}
+	
+	function console($code){
+		global $body;
+		$body.=$code.'<br/>';
 	}
 	
 	function head($code){

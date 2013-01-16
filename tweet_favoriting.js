@@ -138,9 +138,9 @@ HT.fave={
 		}
 	},
 	jumpStart:function(){
-		console.info('ajax_search.php ...');
-		$.ajax('/ajax_search.php', {dataType:'json', success:function(data){
-			console.info('ajax_search.php finished');
+		console.info('search.php ...');
+		$.ajax('/search.php', {data:'ajax=true', dataType:'json', success:function(data){
+			console.info('search.php finished');
 			
 			if(data['status']=='ok' && data['count']>0){
 				console.info('found '+data['count']+' new tweets');
@@ -269,7 +269,7 @@ HT.fave={
 		$("#morebutton").val('Retrieving tweets ...')
 		
 		$.ajax('/ajax_assignMoreTweets.php', {success:function(response){
-			location.href='/tweets_1.php';
+			location.href='/tweets_1.php?gotMore=true';
 		}});
 	}
 };
