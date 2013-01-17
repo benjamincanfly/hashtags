@@ -158,6 +158,16 @@ HT.fave={
 			}
 		}});
 	},
+	theme:function(){
+		if($("#night").attr('checked')){
+			$('body').addClass('night');
+		} else {
+			$('body').removeClass('night');
+		}
+		
+		$.ajax('/ajax_setSessionVar.php', {type:'post', data:'night='+($("#night").attr('checked')?'yes':'no')});
+	
+	},
 	init:function(){
 		console.info('tweet_favoriting init');
 		
@@ -175,6 +185,8 @@ HT.fave={
 				location.href='?page='+$(this).val();
 			});
 			$("#morebutton").live("click", HT.fave.getMore);
+			
+			$("#night").live("click", HT.fave.theme);
 		}
 		
 		if(HT.fave.level==1 || HT.fave.level==2){

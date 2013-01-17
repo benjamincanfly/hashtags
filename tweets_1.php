@@ -3,6 +3,7 @@
 	require_once("config.php");
 	
 	$pageID='tweets_1';
+	$pageClass=$_SESSION['night']=='no'?"":"night";
 	
 	head('<script src="/tweet_favoriting.js"></script>');
 	
@@ -117,7 +118,7 @@
 	body('</div>');
 	
 	if($num){	
-		body("<div id='rateFormatting'><input type='checkbox' name='removestuff' id='removestuff' checked='checked'/> <label for='removestuff'>Remove usernames, hashtags and @jimmys</label><!--&nbsp;&nbsp;&nbsp;<input type='checkbox' name='fx' id='fx' checked='checked'/> <label for='fx'>FX</label>--></div>");
+		body("<div id='rateFormatting'><input type='checkbox' name='removestuff' id='removestuff' checked='checked'/> <label for='removestuff'>Remove usernames, hashtags and @jimmys</label>&nbsp;&nbsp;&nbsp;<input type='checkbox' name='night' id='night' ".($_SESSION['night']=='yes'?'checked="checked"':'false')."'/> <label for='night'>Dark</label><!--&nbsp;&nbsp;&nbsp;<input type='checkbox' name='fx' id='fx' checked='checked'/> <label for='fx'>FX</label>--></div>");
 	}
 	
 	body('<div id="tweets"></div>');

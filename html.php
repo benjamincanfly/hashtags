@@ -21,7 +21,7 @@
 	<!--<link rel="stylesheet" href="handheld.css"/>-->
 	
   </head>
-  <body id="<?php echo $pageID ?>">
+  <body id="<?php echo $pageID ?>" class="<?php echo $pageClass ?>">
 	<div id="header">
 		<div class="wrap">
 			<h1 id="title"><a href="/index.php">Late Night Hashtags</a><br/><span id="hashtag" class="hashtag"><em class='one'>#<?php echo $config['hashtag']?></em><em class='two'>Click to set a new hashtag</em></span></h1>
