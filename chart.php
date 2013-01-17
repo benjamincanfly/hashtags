@@ -20,7 +20,7 @@
 		
 		$hashtag=$hashtags[$h];
 		
-		body('<h3>'.$hashtag.'</h3>');
+		body('<h3>'.$hashtag.'');
 		
 		$qs=sprintf("select tweet_id, username, tweet, ttime from tweets where hashtag='%s' order by tweet_id ASC", mysql_real_escape_string($hashtag));
 		
@@ -34,6 +34,8 @@
 			$saved_tweets_assoc[$tweet['tweet_id']]=$tweet;
 		}
 		
+		body(' - '.count($saved_tweets).' tweets</h3><br/>');
+		
 		$first_tweet=$saved_tweets[0];
 		$last_tweet=$saved_tweets[count($saved_tweets)-1];
 		
@@ -44,13 +46,17 @@
 			$tweetsInMinute[$thisMinute]=isset($tweetsInMinute[$thisMinute])?($tweetsInMinute[$thisMinute]+1):1;
 		}
 		
+		//body('<br/>Test:<pre>'.print_r($tweetsInMinute,true).'<br/>');
+		
 		$numKeys=array_keys($tweetsInMinute);
+		asort($numKeys);
 		
 		$numOfMinutes=$numKeys[count($tweetsInMinute)-1]-$numKeys[0];
 		
 		//body($numOfMinutes);
 		
-		//body('<pre>'.print_r($saved_tweets, true).'</pre>');
+		//body('<pre>'.print_r($tweetsInMinute, true).'</pre>');
+		//body('<pre>'.print_r($numKeys, true).'</pre>');
 		
 		$tweetCount=count($saved_tweets);
 		
@@ -69,11 +75,17 @@
 		
 		//echo $numOfMinutes." minutes<br/>";
 		
-		for($i=$numKeys[0];$i<$numKeys[count($tweetsInMinute)-1];$i++){
+		//body('<br/>1: '.$numKeys[0].'<br/>2: '.$numKeys[count($numKeys)-1]);
+		
+		for($i=$numKeys[0];$i<$numKeys[count($numKeys)-1];$i++){
 			
-			if(!isset($tweetsInMinute[$i])){$j++; continue;}
+			//body('<br/>test');
+			
+			if(!isset($tweetsInMinute[$i])){$j++; /*body('<br/>nothing at '.$i);*/ continue;}
 			
 			$thisHour=strftime('%H', $i*60);
+			
+			//body('<br/>hour: '.$thisHour);
 			
 			if(!$origHour){$origHour=$thisHour;}
 			
