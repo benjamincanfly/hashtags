@@ -238,7 +238,7 @@ HT.fave={
 		var text=tweet['tweet']?tweet['tweet']:'';
 		
 		text=text.replace(new RegExp('(#'+hashtag+')([\s]{0,})', 'gim'), "<span class='hash'>\$1 </span>");
-		text=text.replace(new RegExp('(@jimmyfallon)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>").replace(new RegExp('(@latenightjimmy)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>");
+		text=text.replace(new RegExp('(@latenightjimmy)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>").replace(new RegExp('(@latenightjimmy)([\s]{0,})', 'gim'), "<span class='atjimmy'>\$1 </span>");
 		
 		text=text.replace(/([\s]{1,})/g, ' ');
 		text=$.trim(text);
