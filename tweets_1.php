@@ -3,7 +3,7 @@
 	require_once("config.php");
 	
 	$pageID='tweets_1';
-	$pageClass=$_SESSION['night']=='no'?"":"night";
+	$pageClass=(isset($_SESSION['night']) && $_SESSION['night']=='no')?"":"night";
 	
 	head('<script src="/tweet_favoriting.js"></script>');
 	
