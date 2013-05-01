@@ -5,6 +5,10 @@
 	if($ajax){
 		error_reporting(0);
 		ini_set('display_errors', 'Off');
+	} else {
+		
+		error_reporting(E_ALL);
+		ini_set('display_errors', 'On');
 	}
 	
 	require_once("config.php");
