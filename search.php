@@ -46,7 +46,7 @@
 	
 	/*  				GET JIMMY TWEET ID					*/
 	
-	if(!$_SESSION['jimmy_tweet'] || $_SESSION['jimmy_tweet']['hashtag']!=$config['hashtag'] || (!$_SESSION['jimmy_tweet']['id'] || $_SESSION['jimmy_tweet']['id']=='')){
+	if(!$_SESSION['jimmy_tweet']||$_SESSION['jimmy_tweet']['hashtag']!=$config['hashtag']){
 	
 		body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
 		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@jimmyfallon')."&result_type=recent";
@@ -60,17 +60,15 @@
 		
 		body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id_str.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
 		
-		body('<br/>Here it is:<br/>');
+		//body('<br/>Here it is:<br/>');
 		
-		body('<pre>'.print_r($jimmyTweets,true).'</pre>');
+		//body('<pre>'.print_r($jimmyTweets,true).'</pre>');
 		
 		$_SESSION['jimmy_tweet'] = array('id'=>$jimmyTweets[count($jimmyTweets)-1]->id_str, 'hashtag'=>$config['hashtag'], 'ctime'=>$jimmyTweets[count($jimmyTweets)-1]->created_at);
 	} else {
 		body("Jimmy's oldest #".$config['hashtag']." tweet: ".$_SESSION['jimmy_tweet']['id']."<br/>");
 		
 	}
-	
-	//$_SESSION['jimmy_tweet']['id']=329705200183046145;
 	
 	
 	/*					HAVE JIMMY TWEET ID					*/
