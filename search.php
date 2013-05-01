@@ -70,6 +70,8 @@
 		
 	}
 	
+	$_SESSION['jimmy_tweet']['id']='329705200183046145';
+	
 	
 	/*					HAVE JIMMY TWEET ID					*/
 	
