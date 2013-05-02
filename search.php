@@ -22,7 +22,10 @@
 	}
 	
 	$qs=sprintf("select tweet_id from tweets where hashtag='%s' order by tweet_id DESC", mysql_real_escape_string($config['hashtag']));
-	//$body.=$qs.'<br/>';
+	body($qs.'<br/>');
+	
+	body(mysql_error().'<br/>');
+	body(mysql_num_rows().'<br/>');
 	
 	$q=mysql_query($qs);
 	
@@ -35,6 +38,8 @@
 		$saved_tweets_assoc[$tweet['tweet_id']]=true;
 	}
 	
+	body('<br/>'.print_r($saved_tweets[count($saved_tweets)-1],true).'<br/>');
+	
 	//$body.='<pre>'.print_r($saved_tweets, true).'</pre>';
 	
 	// BEGIN: TWITTER OAUTH
@@ -46,10 +51,14 @@
 	
 	/*  				GET JIMMY TWEET ID					*/
 	
+	
 	if(!$_SESSION['jimmy_tweet']||$_SESSION['jimmy_tweet']['hashtag']!=$config['hashtag']){
 	
 		body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
-		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@jimmyfallon')."&result_type=recent";
+		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@jimmyfallon since:'.strftime("%Y-%m-%d",time()-(60*60*24*30)))."&result_type=recent";
+		
+		body($url.'<br/>');
+		
 		$thing=$connection->get($url);
 		$jimmyTweets=array();
 		if($thing->statuses && count($thing->statuses)>0){
@@ -357,6 +366,9 @@
 	$q=mysql_query($qs);
 	
 	$response=array();
+	
+	//include("html.php");
+	//die();
 	
 	if(isset($error)){
 		$response['status']='error';

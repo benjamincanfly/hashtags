@@ -25,7 +25,7 @@
 	// Get the oldest tweet of Jimmy's with this hashtag.
 	
 	if(!$_SESSION['jimmy_tweet']['id']){
-		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@jimmyfallon')."&result_type=recent";
+		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@jimmyfallon since:'.strftime("%Y-%m-%d",time()-(60*60*24*30)))."&result_type=recent";
 		$thing=$connection->get($url);
 		$jimmyTweets=array();
 		if($thing->statuses && count($thing->statuses)>0){
