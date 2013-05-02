@@ -37,9 +37,9 @@
 	
 	/*  				GET JIMMY TWEET ID					*/
 	
-	if(!$_SESSION['jimmy_tweet']||$_SESSION['jimmy_tweet']['hashtag']!=$config['hashtag'] || (!$_SESSION['jimmy_tweet']['id']||$_SESSION['jimmy_tweet']['id']='')){
+	if(!$_SESSION['jimmy_tweet']||$_SESSION['jimmy_tweet']['hashtag']!=$config['hashtag']){
 	
-		body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
+		//body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
 		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@jimmyfallon')."&result_type=recent";
 		$thing=$connection->get($url);
 		$jimmyTweets=array();

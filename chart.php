@@ -14,9 +14,6 @@
 		$hashtags[]=$row['hashtag'];
 	}
 	
-	body(mysql_error());
-	body(count($hashtags));
-	
 	for($h=0;$h<count($hashtags);$h++){
 		
 		//if($h>0){break;}
