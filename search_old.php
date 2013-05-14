@@ -38,7 +38,7 @@
 		$saved_tweets_assoc[$tweet['tweet_id']]=true;
 	}
 	
-	body('<br/>'.print_r($saved_tweets[count($saved_tweets)-1],true).'<br/>');
+	body('Newest tweet SAVED:<br/>'.print_r($saved_tweets[0],true).'<br/>');
 	
 	//$body.='<pre>'.print_r($saved_tweets, true).'</pre>';
 	
@@ -80,6 +80,7 @@
 	}
 	
 	
+	
 	/*					HAVE JIMMY TWEET ID					*/
 	
 	$_SESSION['lowest_tweet_saved']=count($saved_tweets)?$saved_tweets[count($saved_tweets)-1]:false;
@@ -87,6 +88,9 @@
 	
 	
 		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' -rt')."&result_type=recent&count=1";
+	
+	body("newest ...<br/>");
+	body($url."<br/>");
 	
 	$thing=$connection->get($url);
 	
@@ -183,6 +187,7 @@
 		if($_SESSION['highest_tweet_saved']==$newestTweet->id_str && $config['tweetGap']=='no') {
 			
 			body('Highest saved = highest tweeted. Do nothing.<br/>');
+			body('Because highest saved ('.$_SESSION['highest_tweet_saved'].') = highest tweeted ('.$newestTweet->id_str.') and tweetGap=no.<br/>');
 			
 			// $_SESSION['low_target']=false;
 			// $_SESSION['high_target']=false;
@@ -289,7 +294,7 @@
 			} else if($thing->errors){
 			
 				$error=$thing;
-				body('<h1>ERROR</h1>');
+				body('<h1>ERROR!</h1>');
 				body('<pre>'.print_r($thing,true).'</pre>');
 			
 				$finished=true;
@@ -353,6 +358,7 @@
 		
 	}
 	
+	//body("Test!<br/>");
 	//include("html.php");
 	//die();
 	
