@@ -101,7 +101,7 @@
 	
 	$foundTarget=false;
 	
-	if($saved_tweets_assoc[$config['jimmyTweet']] /*  && (!$config['lowTweet'] || $config['lowTweet']) */) {
+	if($saved_tweets_assoc[$config['jimmyTweet']] && (!$config['lowTweet'] || $config['lowTweet'])) {
 		body("<br/>Jimmy's tweet already gotten");
 		if($config['lowTarget']){
 			$low_target=$config['lowTarget'];
