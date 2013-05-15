@@ -64,7 +64,7 @@
 	if(!$config['jimmyTweet']||$config['jimmyTweet']==''){
 	
 		body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
-		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@GoodTweetss since:'.strftime("%Y-%m-%d",time()-(60*60*24*30)))."&result_type=recent";
+		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@jimmyfallon since:'.strftime("%Y-%m-%d",time()-(60*60*24*30)))."&result_type=recent";
 		
 		body($url.'<br/>');
 		
