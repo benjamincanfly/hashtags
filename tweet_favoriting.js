@@ -177,7 +177,7 @@ HT.fave={
 		HT.fave.level=$("body:first").attr('id').replace('tweets_','');
 		
 		if(HT.fave.level==1 && typeof(unclaimedTweetCount)!='undefined' && unclaimedTweetCount<=500){
-			HT.fave.jumpStart();
+			//HT.fave.jumpStart();
 		}
 		
 		if(HT.fave.level==1){
