@@ -27,7 +27,7 @@
 				$config[$thisSetting['configKey']] = $thisSetting['configValue'];
 			}
 			
-			body("<h1>Hashtag set to #".$_POST['hashtag']." Now go to the <a href=\"/search_new.php\">tweet retrieval page</a> to start loading tweets.</h1><hr/><br/><br/>");
+			body("<h1>Hashtag set to #".$_POST['hashtag'].". Now you need to go to the <a href=\"/search_new.php\">tweet retrieval page</a> to start loading tweets.</h1><hr/><br/><br/>");
 			
 		}
 			
