@@ -24,8 +24,8 @@
   <body id="<?php echo $pageID ?>" class="<?php echo $pageClass ?>">
 	<div id="header">
 		<div class="wrap">
-			<h1 id="title"><a href="/index.php">Late Night Hashtags</a><br/><span id="hashtag" class="hashtag"><em class='one'>#<?php echo $config['hashtag']?></em><em class='two'>Click to set a new hashtag</em></span></h1>
-			<span class="controls"><a href="/tweets_1.php">1) Favorite Tweets</a><a href="/tweets_2.php">2) Cross-Favorite Tweets</a><a href="/tweets_3.php">3) Rate Tweets</a><a href="/tweets_4.php">4) View Rated Tweets</a><a id="joeyLink">Joey</a></span>
+			<h1 id="title"><a href="/index.php">Late Night Hashtags</a><br/><span id="hashtag" class="hashtag">#<?php echo $config['hashtag']?></span></h1>
+			<span class="controls"><a href="/setup.php">1) Setup</a><a href="/tweets_1.php">2) Favorite Tweets</a><a href="/tweets_2.php">3) Cross-Favorite Tweets</a><a href="/tweets_3.php">4) Rate Tweets</a><a href="/tweets_4.php">5) View Rated Tweets</a><a id="joeyLink">Joey</a></span>
 		</div>
 	</div>
 	<div id="content">

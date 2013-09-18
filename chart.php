@@ -14,7 +14,7 @@
 		$hashtags[]=$row['hashtag'];
 	}
 	
-	for($h=0;$h<count($hashtags);$h++){
+	for($h=0;$h<10;$h++){
 		
 		//if($h>0){break;}
 		

@@ -13,6 +13,13 @@
 	
 	require_once("config.php");
 	
+	body('<h2>Tweet retrieval page</h2><br/>');
+	
+	body('<p>Before you start favoriting tweets you need to come to this page, to start loading tweets into the system. WHILE you are favoriting tweets you will also need to use this page to load more. It loads up to a thousand at a time into the system. Just hit your browser\'s reload/refresh button to reload the page and find more tweets.');
+	
+	body('<p>This page makes 10 requests to Twitter to try to retrieve hashtag tweets. If this page finds a lot of statuses, but is not INSERTING any, or if it is INSERTING far less than the number of tweets it FOUND, that means you need to RESET the Tweet Checker (button is below).');
+	
+	
 	if($config['searching']=='yes'){
 		if($ajax){
 			$response=array();
@@ -29,7 +36,8 @@
 	}
 	
 	$qs=sprintf("select tweet_id from tweets where hashtag='%s' order by tweet_id DESC", mysql_real_escape_string($config['hashtag']));
-	body($qs.'<br/>');
+	
+	//body($qs.'<br/>');
 	
 	body(mysql_error().'<br/>');
 	body(mysql_num_rows().'<br/>');
@@ -47,7 +55,7 @@
 	
 	$newestSavedTweet=$saved_tweets[0];
 	
-	body('Newest tweet SAVED:<br/>'.print_r($saved_tweets[0],true).'<br/>');
+	//body('Newest tweet SAVED:<br/>'.print_r($saved_tweets[0],true).'<br/>');
 	
 	//$body.='<pre>'.print_r($saved_tweets, true).'</pre>';
 	
@@ -63,7 +71,7 @@
 	
 	if(!$config['jimmyTweet']||$config['jimmyTweet']==''){
 	
-		body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
+		//body("<h2>Looking for Jimmy's oldest #".$config['hashtag']." tweet ...</h2>");
 		$url="https://api.twitter.com/1.1/search/tweets.json?q=".urlencode("#".$config['hashtag'].' from:@jimmyfallon since:'.strftime("%Y-%m-%d",time()-(60*60*24*30)))."&result_type=recent";
 		
 		body($url.'<br/>');
@@ -78,6 +86,8 @@
 		
 		body("<br/>Found #".$config['hashtag'].' Jimmy tweet: '.$jimmyTweets[count($jimmyTweets)-1]->id_str.' '.$jimmyTweets[count($jimmyTweets)-1]->text.'<br/><br/>');
 		
+		$foundJimmy=true;
+		
 		//body('<br/>Here it is:<br/>');
 		
 		//body('<pre>'.print_r($jimmyTweets,true).'</pre>');
@@ -90,7 +100,7 @@
 		$q=mysql_query($qs);
 		
 	} else {
-		body("Jimmy's oldest #".$config['hashtag']." tweet: ".$config['jimmyTweet']."<br/>");
+		//body("Jimmy's oldest #".$config['hashtag']." tweet: ".$config['jimmyTweet']."<br/>");
 	}
 	
 	$all_tweets=array();
@@ -102,14 +112,14 @@
 	$foundTarget=false;
 	
 	if($saved_tweets_assoc[$config['jimmyTweet']] && (!$config['lowTweet'] || $config['lowTweet'])) {
-		body("<br/>Jimmy's tweet already gotten");
+		//body("<br/>Jimmy's tweet already gotten");
 		if($config['lowTarget']){
 			$low_target=$config['lowTarget'];
 		} else {
 			$low_target=$saved_tweets[0];
 		}
 	} else if(!$saved_tweets_assoc[$config['jimmyTweet']]) {
-		body("<br/>Jimmy's tweet not gotten yet");
+		//body("<br/>Jimmy's tweet not gotten yet");
 		$low_target=bcadd($config['jimmyTweet'], "-1");
 	}
 	
@@ -127,13 +137,13 @@
 	
 		$url.="&result_type=recent&count=100&since_id=".($low_target).$max_query;
 		
-		$body.="<br/>URL ".$i.": ".$url."<br/>";
+		//$body.="<br/>URL ".$i.": ".$url."<br/>";
 	
 		$thing=$connection->get($url);
 	
 		//body('<pre>'.print_r($thing,true).'</pre>');
 	
-		body("Found ".count($thing->statuses)." statuses <br/>");
+		body("<br/>Found ".count($thing->statuses)." statuses");
 		
 		if($thing->statuses && count($thing->statuses)>0){
 		
@@ -156,7 +166,7 @@
 				
 			}
 			
-			body('<h1>Set lowTweet to '.$high_target.'</h1>');
+			//body('<br/>Set lowTweet to '.$high_target.'');
 			
 			$qs=sprintf("update config set configValue='%s' where configKey='lowTweet'", $high_target);
 			$q=mysql_query($qs);
@@ -175,7 +185,7 @@
 			break;
 		} else {
 			
-			body('<h1>Set lowTweet empty!</h1>');
+			//body('<h1>Set lowTweet empty!</h1>');
 			
 			$qs=sprintf("update config set configValue='' where configKey='lowTweet'");
 			$q=mysql_query($qs);
@@ -183,7 +193,7 @@
 			$qs=sprintf("update config set configValue='' where configKey='lowTarget'");
 			$q=mysql_query($qs);
 			
-			body('<h1>Error or just no tweets to find.</h1>');
+			//body('<h1>Error or just no tweets to find.</h1>');
 			$finished=true;
 			break;
 		}
@@ -191,7 +201,7 @@
 	}
 	
 	
-	$body.="<br/><h1>Tweets gotten: ".count($all_tweets)."</h1>";
+	$body.="<br/><br/><h1>Tweets gotten: ".count($all_tweets)."</h1>";
 	
 	//$body.='<pre>'.print_r($all_tweets,true).'</pre>';
 	
@@ -223,14 +233,15 @@
 	//die();
 	
 	if(isset($inserted_tweets) && count($inserted_tweets)){
-		body('<br/>Inserted '.count($inserted_tweets)." tweets");
+		body('<h2>Tweets Inserted: '.count($inserted_tweets)."</h2>");
 	} else {
-		body('<br/>Did not insert any tweets.');
+		body('<h2>Did not insert any tweets.</h2>');
 	}
 	
 	$qs=sprintf("update config set configValue='no' where configKey='searching'");
 	$q=mysql_query($qs);
 	
+	body('<br/><br/><input type="button" id="refresh" value="Click here to reset Tweet Checker"/>');
 	
 	if($ajax){
 		$response=array();
